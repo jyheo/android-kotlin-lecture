@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Notification Example</string>
+    <string name="long_notification_body">"This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! "</string>
+</resources>
