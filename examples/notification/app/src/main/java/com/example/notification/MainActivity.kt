@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val myNotificationID = 1
+    private var myNotificationID = 1
+        get() = field++
 
     private fun showNotification() {
         val builder = NotificationCompat.Builder(this, channelID)
