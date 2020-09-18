@@ -9,9 +9,12 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.TaskStackBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,15 +23,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         createNotificationChannel()
+    }
 
-        val button = findViewById<Button>(R.id.button)
-        button.setOnClickListener {
-            //showNotification()
-            //showNotificationBigText()
-            //showNotificationBigPicture()
-            //showNotificationProgress()
-            showNotificationButton()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.show_notification -> showNotification()
+            R.id.show_noti_bigtext -> showNotificationBigText()
+            R.id.show_noti_bigpicture -> showNotificationBigPicture()
+            R.id.show_noti_progress -> showNotificationProgress()
+            R.id.show_noti_button -> showNotificationButton()
+            R.id.show_noti_reg_activity -> showNotificationRegularActivity()
+            R.id.show_noti_special_activity -> showNotificationSpecialActivity()
         }
+        return super.onOptionsItemSelected(item)
     }
 
     private val channelID = "default"
@@ -119,5 +131,37 @@ class MainActivity : AppCompatActivity() {
             NotificationManagerCompat.from(this)
                     .notify(myNotificationID, builder.build())
         }.start()
+    }
+
+    private fun showNotificationRegularActivity() {
+        val intent = Intent(this, SecondActivity::class.java)
+        val pendingIntent = with (TaskStackBuilder.create(this)) {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        val builder = NotificationCompat.Builder(this, channelID)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("Notification Title")
+            .setContentText("Notification body")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true) // auto remove this notification when user touches it
+        NotificationManagerCompat.from(this)
+            .notify(myNotificationID, builder.build())
+    }
+
+    private fun showNotificationSpecialActivity() {
+        val intent = Intent(this, TempActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val builder = NotificationCompat.Builder(this, channelID)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("Notification Title")
+            .setContentText("Notification body")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true) // auto remove this notification when user touches it
+        NotificationManagerCompat.from(this)
+            .notify(myNotificationID, builder.build())
     }
 }
