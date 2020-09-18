@@ -175,60 +175,119 @@ backgroundImage: url('images/background.png')
     - 사용자가 다른 방법으로 시작하지는 못하게 함
 
 
+## 태스크와 백 스택(Back Stack)
+- 태스크(Task): 어떤 작업을 하기 위한 액티비티의 그룹
+    - 태스크마다 자신의 백스택을 가지고 있음
+    ![](https://developer.android.com/images/fundamentals/diagram_backstack.png)
+    - foreground, background task
+    ![](https://developer.android.com/images/fundamentals/diagram_multitasking.png)
+        - foreground task(Task B), background task(Task A)
+        - 최근 앱 보기에서 선택하거나 앱 아이콘을 눌러서 foreground task로 전환할 수 있음
+
+<!-- 
+예) 이메일 목록 보여주는 액티비티에서 메일을 선택했을 때 상세보기 액티비티를 시작한다고 하면, 이 두 액티비티는 하나의 태스크로 관리됨
+-->
+
+## 태스크와 백 스택(Back Stack)
+- 액티비티를 시작(startActivity)할 때 플래그에 따라 다르게 동작하게 할 수 있음
+    - A라는 액티비티를 시작한다고 가정, startActivity(A)
+    - 플래그 없음: 액티비티 A의 새 인스턴스를 항상 시작함
+    - FLAG_ACTIVITY_NEW_TASK: 새 태스크로 A를 시작, 하지만 이미 실행 중인 A의 인스턴스가 있다면 새로 만들지 않고 A의 인스턴스가 포함된 태스크를 앞(foreground)으로 가져오고 A의 onNewIntent()호출
+        - FLAG_ACTIVITY_CLEAR_TASK: A의 인스턴스와 관련된 모든 기존 태스크를 제거하고 새로 A의 인스턴스를 시작함, FLAG_ACTIVITY_NEW_TASK와 같이 사용해야 함
+    - FLAG_ACTIVITY_SINGLE_TOP: A의 인스턴스가 태스크 백스택 탑에 존재하는 경우, 새로 만들지 않고 A의 onNewIntent() 호출 
+    - FLAG_ACTIVITY_CLEAR_TOP: A의 인스턴스가 이미 시작 중인 경우 백스택에서 A의 인스턴스 위에 있는 다른 액티비티 인스턴스들을 모두 제거하고 A의 onNewIntent() 호출
+        - FLAG_ACTIVITY_NEW_TASK와 같이 자주 사용됨
+
+
+## 태스크와 백 스택(Back Stack)
+- 플래그 FLAG_ACTIVITY_NEW_TASK 예
+![](https://developer.android.com/images/fundamentals/diagram_backstack_singletask_multiactivity.png)
+- https://developer.android.com/guide/components/activities/tasks-and-back-stack
+
+
 ## 알림에 액티비티 연결하기 - 일반 액티비티
-* 알림을 터치하면 일반 액티비티인 SecondActivity가 시작
+* 알림을 터치하면 일반 액티비티인 SecondActivity가 시작, 이때 MainActivity위에 SecondActivity가 있는 백스택을 생성
 * AndroidManifest.xml의 SecondActivity 정의 부분
     ```xml
-    <activity android:name=".SecondActivity"
-            android:parentActivityName=".MainActivity">
-    </activity>
+    <activity android:name=".SecondActivity"  android:parentActivityName=".MainActivity" />
     ```
 * PendingIntent 생성하고 알림 등록
-    ```java
-    Intent intent = new Intent(this, SecondActivity.class);
-    TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-    stackBuilder.addParentStack(SecondActivity.class);
-    stackBuilder.addNextIntent(intent);
-    PendingIntent pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-    mBuilder.setContentIntent(pIntent);
-    mBuilder.setAutoCancel(true);
-    mNotificationManagerCompat.notify(MY_NOTIFICATION_ID, mBuilder.build());
+    ```kotlin
+    val intent = Intent(this, SecondActivity::class.java)
+    val pendingIntent = with (TaskStackBuilder.create(this)) {
+        addNextIntentWithParentStack(intent)
+        getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+    val builder = NotificationCompat.Builder(this, channelID)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setContentTitle("Notification Title")
+        .setContentText("Notification body")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true) // auto remove this notification when user touches it
+    NotificationManagerCompat.from(this).notify(myNotificationID, builder.build())                          
     ```
 
+## 알림에 액티비티 연결하기 - 일반 액티비티
+- 알림을 터치하면
+    - 알림은 사라지고, SecondActivity가 실행됨
+    - SecondActivity가 실행된 상태에서 Back이나 Up을 누르면 MainActivity가 나옴.
+        - 사실 MainActivity가 이미 백스택에 있기 때문에 TaskStackBuilder로 백스택을 조작하지 않아도 동일하게 동작
+        - 백스택에 없는 다른 액티비티를 SecondActivity의 parentActivity로 하면 달라짐
+![](images/noti_regular_activity.png)
 
 
 
 ## 알림에 액티비티 연결하기 - 알림 전용 액티비티
-* 알림을 터치하면 알림 전용 액티비티인 TempActivity가 시작됨
-* AndroidManifest.xml의 TempActivity 정의 부분
+- 알림을 터치하면 알림 전용 액티비티인 TempActivity가 시작됨
+- AndroidManifest.xml의 TempActivity 정의 부분
     ```xml
     <activity android:name=".TempActivity"
                 android:taskAffinity=""
-                android:excludeFromRecents="true">
-    </activity>
+                android:excludeFromRecents="true"> </activity>
     ```
-* PendingIntent 생성하고 알림 등록
-    ```java
-    Intent intent = new Intent(this, TempActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    mBuilder.setContentIntent(pIntent);
-    mBuilder.setAutoCancel(true);
-    mNotificationManagerCompat.notify(MY_NOTIFICATION_ID, mBuilder.build());
+- PendingIntent 생성하고 알림 등록
+    ```kotlin
+    val intent = Intent(this, TempActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    val builder = NotificationCompat.Builder(this, channelID)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setContentTitle("Notification Title")
+        .setContentText("Notification body")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true) // auto remove this notification when user touches it
+    NotificationManagerCompat.from(this)
+        .notify(myNotificationID, builder.build())
     ```
 
+## 알림에 액티비티 연결하기 - 알림 전용 액티비티
+- 알림을 터치하면,
+    - 알림은 사라지고, TempActivity가 실행됨
+    - 최근(Recents) 앱 보기를 눌러보면 TempActivity와 MainActivity가 서로 다른 태스크로 되어 있음
+    - 알림을 터치하기 전에 홈 버튼을 누른 후에, 알림을 터치하여 TempActivity를 실행하게 한 후
+        - TempActivity에서 Back을 누르면 백스택에 다른 액티비티가 없기 때문에 홈 화면으로 돌아감    
+![](images/noti_special_activity.png)
 
-## 참고 링크
-- https://developer.android.com/guide/topics/ui/notifiers/notifications?hl=ko
-- https://developer.android.com/training/notify-user/build-notification?hl=ko
 
+## 참고자료
+- 예제코드
+    - https://github.com/jyheo/android-kotlin-lecture/tree/master/examples/notification
+- developer.android.com
+    - https://developer.android.com/training/notify-user/build-notification
 
 
 ## 실습
 - 아래의 요구사항을 만족하는 알림을 만든다.
 - 요구사항
-    - 메뉴를 만든다.
+    - MainActivity, Noti1Activity, Noti2Activity
+    - MainActivity에 메뉴를 만든다.
     - 메뉴 항목에는 알림1, 알림2
     - 알림1과 알림2는 서로 다른 알림 채널로 알림을 보낸다.
-- 실행
-    - 알림1을 누르면 
+    - 알림1이 표시되고 터치하면 Noti2Activity를 시작하고, Back을 누르면 Noti1Activity가 나타난다. 한번 더 Back을 누르면 홈 화면이나 다른 태스크가 나타남
+        - Noti12Activity의 parentActivity는 Noti1Activity임
+    - 알림2는 표시만 되고 다른 동작을 할 필요는 없다.
+- 제출
+    - 소스코드.zip: MainActivity.kt, AndroidManifest.xml
+    - 동영상: 예시 동영상 처럼 동작이 되도록 실습 결과를 녹화하여 제출한다.
