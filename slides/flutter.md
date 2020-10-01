@@ -331,8 +331,10 @@ void main() => runApp(MyApp());
     assets:
       - assets/images/
   ```
+- 참고) Image.network(URL): URL의 이미지를 표시
 - 다른 레이아웃에(ListView, GridView, CardView 등) 대한 정보
   - https://flutter.dev/docs/development/ui/layout
+
 ![bg right:30% w:300](images/flutter_row.png)
 
 
@@ -701,11 +703,100 @@ void main() => runApp(ChangeNotifierProvider(
       - 이는 Consumer<>의 자식 위젯으로 만드는데, 상태 변경에 따라 다시 만들 필요가 없는 위젯을 지정하여 사용하면 됨
 
 
+## 앱 상태 관리
+- State<StatefullWidget> 사용 방법과 ChangeNotifier의 사용
+  - 특정 위젯 내에서 상태 관리를 위해서는 State<> 사용
+  - 앱 전체에서 상태 관리를 위해서는 ChangeNotifier 사용
+- 다른 상태 관리 라이브러리들도 존재
+  - 웹에서 유명한 Redux 등을 포함해 MobX, GetX 등
+  - https://flutter.dev/docs/development/data-and-backend/state-mgmt/options
+
+
+## Dart 언어의 비동기 - future, async, await
+- 비동기(async) 함수는 함수 정의에 async 추가
+  - async 함수는 Future<>를 리턴해야 함
+  - ``` Future<int> test_func() async { ... } ```
+- await는 async 함수를 동기적으로 처리하기 위해
+  - 뒤에 나오는 aync 함수 호출이 완료될 때까지 기다림
+  - await는 async 함수 내에서만 사용 가능
+  - ``` await test_func() ```
+- await 없이 async 함수를 호출하면 비동기로 해당 함수가 처리됨
+- Future<> 를 리턴받을 때 .then() 메소드를 이용하여 완료된 후 불릴 콜백을 지정할 수 있음
+  ```dart
+  test_func().then((value) {
+    print(value);
+  }, onError: () => print('error'));
+  ```
+
+## Dart 언어의 비동기 - future, async, await
+- Flutter에서 비동기를 사용해야 하는 경우
+  - 파일 조작
+  - 네트워크 데이터 송수신
+
+
+## 키-값 저장하기
+- 안드로이드의 SharedPreferences
+- iOS의 NSUserDefaults
+- Flutter shared_preferences 라이브러리
+  - https://pub.dev/packages/shared_preferences
+- pubspec.yaml
+  ```yaml
+  dependencies:
+    flutter:
+      sdk: flutter
+
+    shared_preferences: '>=0.5.12 <2.0.0'   # 0.5.12 이상, 2.0 미만
+  ```
+
+## 키-값 저장하기
+- 라이브러리 import
+  - ``` import 'package:shared_preferences/shared_preferences.dart'; ```
+- SharedPreferences 객체 가져오기
+  - ``` SharedPreferences.getInstance() ```
+  - 리턴 타입이 ``` Future<SharedPreferences> ```
+  - 따라서 await를 하거나 then()으로 콜백 등록해서 사용해야 함
+- 키-값 가져오기/저장하기
+  - SharedPreferences 객체의 getInt, getString, getDouble, getBool, getStringList를 사용하여 키에 해당하는 값을 가져옴
+  - 저장할 때는 setInt, setString, setDouble, setBool, setStringList 사용
+
+
+## 키-값 저장하기
+- App 상태 예제에서 AppState를 다음과 같이 수정하면 앱을 재시작하더라도 state가 유지됨
+  ```dart
+  // 앱 상태를 저장하기 위한 클래스
+  class AppState extends ChangeNotifier {
+    int state = 0;
+
+    AppState() {
+      SharedPreferences.getInstance().then((prefs) {
+        state = prefs.getInt('state') ?? 0;
+      });
+    }
+
+    void increaseState() {
+      state++;
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setInt('state', state);
+      });
+      notifyListeners();
+    }
+
+  }
+  ```
+
+
 ## Flutter에 대해 더 자세한 내용은
 - https://flutter.dev/docs
   - Platform-specific 코드 작성 방법
   - 디버그 & 테스팅 방법
   - 앱 퍼블리시 방법
-  - 기타 등등
+  - 기타 등등 https://flutter.dev/docs/cookbook
 - Intro to Dart for Java Developers
   - https://codelabs.developers.google.com/codelabs/from-java-to-dart/#0
+
+
+  ## 실습 1 - 레이아웃 만들기
+  - 아래와 같은 UI를 만들고
+
+  ## 실습 2 - 네비게이션과 상태 관리
+  - 아래와 같은 페이지들을 만들고, 
