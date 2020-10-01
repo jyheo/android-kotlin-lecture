@@ -35,36 +35,35 @@ backgroundImage: url('images/background.png')
 
 ## 개발환경 설치
 - ``` C:\> flutter doctor ```
-```bash
-C:\Users\jyheo>flutter doctor
-
-  ╔════════════════════════════════════════════════════════════════════════════╗
-  ║                 Welcome to Flutter! - https://flutter.dev                  ║
-  ║                                                                            ║
-  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
-  ║ statistics and basic crash reports. This data is used to help improve      ║
-  ║ Flutter tools over time.                                                   ║
-  ║                                                                            ║
-  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
-  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
-  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
-  ║ event will be sent, and then no further information will be sent by the    ║
-  ║ Flutter tool.                                                              ║
-  ║                                                                            ║
-  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
-  ║ Note: The Google Privacy Policy describes how data is handled in this      ║
-  ║ service.                                                                   ║
-  ║                                                                            ║
-  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
-  ║ crash reports to Google.                                                   ║
-  ║                                                                            ║
-  ║ Read about data we send with crash reports:                                ║
-  ║ https://flutter.dev/docs/reference/crash-reporting                         ║
-  ║                                                                            ║
-  ║ See Google's privacy policy:                                               ║
-  ║ https://policies.google.com/privacy                                        ║
-  ╚════════════════════════════════════════════════════════════════════════════╝
-```
+  ```bash
+  C:\Users\jyheo>flutter doctor
+    ╔════════════════════════════════════════════════════════════════════════════╗
+    ║                 Welcome to Flutter! - https://flutter.dev                  ║
+    ║                                                                            ║
+    ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+    ║ statistics and basic crash reports. This data is used to help improve      ║
+    ║ Flutter tools over time.                                                   ║
+    ║                                                                            ║
+    ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+    ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+    ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+    ║ event will be sent, and then no further information will be sent by the    ║
+    ║ Flutter tool.                                                              ║
+    ║                                                                            ║
+    ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+    ║ Note: The Google Privacy Policy describes how data is handled in this      ║
+    ║ service.                                                                   ║
+    ║                                                                            ║
+    ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+    ║ crash reports to Google.                                                   ║
+    ║                                                                            ║
+    ║ Read about data we send with crash reports:                                ║
+    ║ https://flutter.dev/docs/reference/crash-reporting                         ║
+    ║                                                                            ║
+    ║ See Google's privacy policy:                                               ║
+    ║ https://policies.google.com/privacy                                        ║
+    ╚════════════════════════════════════════════════════════════════════════════╝
+  ```
 
 ## 개발환경 설치
 ```bash
@@ -107,17 +106,17 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ## 개발환경 설치
 - 모두 정상적으로 설치된 상황이면
-```bash
-C:\Users\jyheo>flutter doctor
-Doctor summary (to see all details, run flutter doctor -v):
-[√] Flutter (Channel stable, 1.20.4, on Microsoft Windows [Version 10.0.18363.1082], locale ko-KR)
-[√] Android toolchain - develop for Android devices (Android SDK version 30.0.2)
-[√] Android Studio (version 4.0)
-[√] VS Code (version 1.49.2)
-[√] Connected device (1 available)
+  ```bash
+  C:\Users\jyheo>flutter doctor
+  Doctor summary (to see all details, run flutter doctor -v):
+  [√] Flutter (Channel stable, 1.20.4, on Microsoft Windows [Version 10.0.18363.1082], locale ko-KR)
+  [√] Android toolchain - develop for Android devices (Android SDK version 30.0.2)
+  [√] Android Studio (version 4.0)
+  [√] VS Code (version 1.49.2)
+  [√] Connected device (1 available)
 
-• No issues found!
-```
+  • No issues found!
+  ```
 
 ## 개발환경 동작 확인
 - 안드로이드 스튜디오 실행
@@ -397,7 +396,7 @@ void main() => runApp(MyApp());
 ## 상태 저장
 - StatelessWidget vs. StatefullWidget
 - StatelessWidget은 상태가 변하지 않음
-  - 예) Icon, IconButton Text
+  - 예) Icon, IconButton, Text
   - StatelessWidget을 상속하여 만듬
 - StatefullWidget은 사용자 인터랙션이나 데이터를 받음에 따라 상태가 동적으로 변함
   - 예) Checkbox, Radio, Slider, InkWell, Form, TextField
