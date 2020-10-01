@@ -387,6 +387,9 @@ void main() => runApp(MyApp());
     - ``` onPressed: () { Scaffold.of(conte  ...     st!"),)); } ```
   - (인자 리스트) => 한줄 함수
     - ``` onPressed: () => Scaffold.of(conte  ...     st!"),)), ```
+- Scaffold.of(context) : 현재 객체와 가장 가까운 Scaffold 객체를 리턴
+  - 보통 Scaffold의 자식 위젯 내에서 Scaffold 객체를 가져오기 위해 사용
+  - 여기에서는 Scaffold의 showSnackBar() 메소드 호출을 위해 사용
 
 
 ## 상태 저장
@@ -468,16 +471,241 @@ void main() => runApp(MyApp());
           }),
   ```
 
-## 네비게이션(Navigation)
-- Navigation
+## 네비게이션
+- 모바일 앱은 대부분 여러 화면을 전환하며 정보를 표시하고 사용자 입력을 받게 됨
+  - 목록을 보여주는 화면에서 아이템을 선택하면 해당 아이템 정보를 보여주는 화면으로 넘어가는 방식
+- Flutter에서는 이런 화면(안드로이드에서 액티비티나 프래그먼트와 같은)을 **라우트(Route)** 라고 부름
+  - 라우트는 위젯을 사용하여 만들게 됨
+- 네비게이션 API는 특정 라우트로 전환하는 방법을 제공
+  - 방법1) 라우트를 생성하여 이동하거나
+  - 방법2) 라우트에 이름을 부여하고, 이름을 불러서 이동할 수 있음
+- 방법 1) Navigator.push(라우트)와 Navigator.pop()으로 라우트 전환
+  - push(): 인자로 받은 특정 라우트로 이동
+  - pop()을 불러서 이전 라우트로 되돌아감
+
+## 네비게이션 - 방법1
+```dart
+class StartPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Start Page')),
+        body: Center(
+            child: RaisedButton(
+                child: Text("Go to NextPage"),
+                onPressed: () => Navigator.push(  // 새로 생성한 라우트로 이동
+                      context,
+                      MaterialPageRoute(builder: (context) => NextPage()), // 위젯으로 라우트 생성
+                    ))));
+  }
+}
+
+class NextPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Next Page')),
+        body: Center(
+            child: RaisedButton(
+          child: Text("Go Back"),
+          onPressed: () => Navigator.pop(context),  // 이전 라우트로 되돌아가기
+        )));
+  }
+}
+```
+
+## 네비게이션 - 방법1
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Navigation Test',
+      home: StartPage(),
+    );
+  }
+}
+
+void main() => runApp(MyApp());
+```
+![bg right:30% w:350](images/flutter_nav.png)
+
+
+## 네비게이션 - 방법2
+- 방법2) 라우트마다 이름을 지정하고, 그 이름으로 Navigator.pushNamed(라우트 이름) 호출
+  ```dart
+  class StartPage extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+          appBar: AppBar(title: Text('Start Page')),
+          body: Center(
+              child: RaisedButton(
+                  child: Text("Go to NextPage"),
+                  onPressed: () => Navigator.pushNamed(context, '/next'))));  // 해당 이름의 라우트로 이동
+    }
+  }
+
+  class NextPage extends StatelessWidget {  // 방법 1의 예제와 동일함
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+          appBar: AppBar(title: Text('Next Page')),
+          body: Center(
+              child: RaisedButton(
+            child: Text("Go Back"),
+            onPressed: () => Navigator.pop(context), // 이전 라우트로 되돌아가기
+          )));
+    }
+  }
+  ```
+
+## 네비게이션 - 방법2
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Navigation Test',
+      initialRoute: '/',   //  시작 라우트
+      routes: {
+        '/': (context) => StartPage(),   // 라우트 '/'는 StartPage를 생성
+        '/next': (context) => NextPage(),   // 라우트 '/next'는 NextPage를 생성
+      },
+    );
+  }
+}
+
+void main() => runApp(MyApp());
+```
+- 실행 결과는 방법1과 동일함
+
+![bg right:30% w:350](images/flutter_nav.png)
+
 
 ## 앱 상태 관리
-- ChangeNotifier
+- Flutter는 UI를 빌드할 때 상태에 따라 매번 새로 빌드하게 됨
+  - 예를 들어 Text()의 내용을 변경하기 위해서는 Text()가 참조하는 상태(문자열)를 변경하고 Text()가 포함된 상위 위젯을 다시 빌드하도록 함
+  - 앞의 TextField 예제가 이런 방식을 사용한 것임
+    - State<> 에서 상태를 관리하고, 다시 빌드하도록 setState()를 호출한 것임
+  - 특정 위젯 내에서 상태관리는 이렇게 StatefullWidget을 활용하면 되지만,
+- 앱 전체가 공유하는 상태를 관리하려고 한다면?
+- ChangeNotifier와 provider 라이브러리를 사용하여 앱 전체에서 접근 가능한 상태 관리를 할 수 있음
+  - ChangeNotifier : 관리할 상태를 가지고 있으며, 상태가 변경될 때 리스너들에게 알림
+  - provider.ChangeNotifierProvider : ChangeNotifier를 자손 위젯들에게 제공하는 위젯
+  - provider.Consumer : 상태를 사용하는 자손 위젯
 
 
-## 더 자세한 내용은
+## 앱 상태 관리
+- provider 라이브러리 추가
+- pubspec.yaml에 provider 라이브러리 추가
+  ```yaml
+  dependencies:
+    flutter:
+      sdk: flutter
+
+    provider: ^3.0.0     # 이 부분을 추가
+  ```
+  - pubspec.yaml을 수정하면 안드로이드 스튜디오가 업데이트할 지 물어봄
+    - 또는 yaml 편집화면에서 Pub get을 실행하여 라이브러리를 가져옴
+- 코드 상단에 import provider 패키지
+  - ``` import 'package:provider/provider.dart'; ```
+
+
+## 앱 상태 관리
+```dart
+// 앱 상태를 저장하기 위한 클래스
+class AppState extends ChangeNotifier {
+  int state = 0;
+
+  void increaseState() {
+    state++;
+    notifyListeners();  // 리스너(Consumer<AppState>)에게 변경을 알림
+  }
+}
+```
+
+## 앱 상태 관리
+```dart
+class StartPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Start Page')),
+        body: Center(
+            child: RaisedButton(
+                child: Text("Go to NextPage"),
+                onPressed: () {
+                  Provider.of<AppState>(context).increaseState();  // AppState 객체에 접근하기 위한 방법
+                  Navigator.pushNamed(context, '/next');
+                })));
+  }
+}
+
+class NextPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Next Page')),
+        body: Center(
+            child: Consumer<AppState>(    //  상태를 사용할 때 쓰는 Consumer 위젯
+                builder: (context, appState, child) => RaisedButton(  // appState는 ChangeProvider 객체
+                      child: Text("Go Back ${appState.state}"),
+                      onPressed: () => Navigator.pop(context),
+                    ))));
+  }
+}
+```
+
+## 앱 상태 관리
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Navigation Test',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => StartPage(),
+        '/next': (context) => NextPage(),
+      },
+    );
+  }
+}
+
+void main() => runApp(ChangeNotifierProvider(
+    // MyApp() 포함하여 자손 위젯들에게 AppState()를 제공
+    create: (context) => AppState(),
+    child: MyApp()));
+```
+- Next Page로 갈 때마다 Back 버튼의 숫자가 1씩 증가
+
+![bg right:30% w:350](images/flutter_appstate.png)
+
+
+## 앱 상태 관리
+- Consumer<AppState> 위젯 사용에 대해
+  ```dart
+    Consumer<AppState>(    //  상태를 사용할 때 쓰는 Consumer 위젯
+      builder: (context, appState, child) => RaisedButton(  // appState는 ChangeProvider 객체
+            child: Text("Go Back ${appState.state}"),
+            onPressed: () => Navigator.pop(context),
+          ))));
+      child: someWidget() // 이 위젯은 builder의 세번 째 인자 child로 그대로 전달됨
+  ```
+  - Consumer의 builder 인자로 위젯을 만들어 넘기는데, 이 때 두번 째 인자로 appState(ChangeProvider 객체)와 세번째 인자로 child가 전달 됨
+    - 전달된 appState에서 상태 값을 가져와서 사용함
+    - AppState에서 notifyListener()호출될 때 이 위젯을 다시 생성하게 됨
+      - 버튼이 눌릴 때 increateState()가 호출되고, 이 메소드 안에서 notifyListener() 호출 됨
+    - 세번 째 인자 child는 Consumer<> 생성할 때 child 인자로 전달된 위젯이 그대로 오게 됨
+      - 이는 Consumer<>의 자식 위젯으로 만드는데, 상태 변경에 따라 다시 만들 필요가 없는 위젯을 지정하여 사용하면 됨
+
+
+## Flutter에 대해 더 자세한 내용은
 - https://flutter.dev/docs
   - Platform-specific 코드 작성 방법
   - 디버그 & 테스팅 방법
   - 앱 퍼블리시 방법
   - 기타 등등
+- Intro to Dart for Java Developers
+  - https://codelabs.developers.google.com/codelabs/from-java-to-dart/#0
