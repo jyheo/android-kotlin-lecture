@@ -22,7 +22,7 @@ class _ScaffoldBody extends StatelessWidget {
               showCustomSnackBar(context, "Empty Name!");
               return;
             }
-            Provider.of<AppState>(context).currentUser =
+            Provider.of<AppState>(context, listen: false).currentUser =
                 textEditingController.text;
             Navigator.pop(context);
           })

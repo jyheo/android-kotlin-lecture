@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // 앱 상태를 저장하기 위한 클래스
 class AppState extends ChangeNotifier {
   int state = 0;
-  String _currentUser;
+  String _currentUser = "";
 
   AppState() {
     SharedPreferences.getInstance().then((prefs) {
