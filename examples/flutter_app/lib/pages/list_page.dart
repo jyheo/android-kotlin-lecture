@@ -8,14 +8,17 @@ _tile(context, icon, title) => ListTile(
   onTap: () => showCustomDialog(context, "Item", title),
 );
 
-_scaffoldBody(context) {
-  var list = <Widget>[];
-  for (var i = 0; i < 20; i++) {
-    list.add(_tile(context, Icons.access_alarm, "Item $i"));
+class _ScaffoldBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var list = <Widget>[];
+    for (var i = 0; i < 20; i++) {
+      list.add(_tile(context, Icons.access_alarm, "Item $i"));
+    }
+    return ListView(
+      children: list,
+    );
   }
-  return ListView(
-    children: list,
-  );
 }
 
 class ListPage extends StatelessWidget {
@@ -26,7 +29,7 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text(menu_name)),
-        body: _scaffoldBody(context)
+        body: _ScaffoldBody()
     );
   }
 }
