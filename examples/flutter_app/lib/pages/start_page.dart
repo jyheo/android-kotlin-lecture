@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_app/pages/image_page.dart';
 import 'package:flutter_app/pages/change_name.dart';
 import 'package:flutter_app/pages/form_page.dart';
+import 'package:flutter_app/pages/list_page.dart';
 import 'package:flutter_app/app_state.dart';
 import 'package:flutter_app/ui_utils.dart';
 
@@ -44,6 +45,10 @@ class _Drawer extends StatelessWidget {
               leading: Icon(Icons.image),
               title: Text(ImagePage.menu_name),
               onTap: () => Navigator.popAndPushNamed(context, ImagePage.nav_url)),
+          ListTile(
+              leading: Icon(Icons.list),
+              title: Text(ListPage.menu_name),
+              onTap: () => Navigator.popAndPushNamed(context, ListPage.nav_url)),
           ListTile(
               leading: Icon(Icons.clear),
               title: Text('close drawer'),

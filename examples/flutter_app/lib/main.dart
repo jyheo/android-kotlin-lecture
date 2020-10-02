@@ -4,6 +4,7 @@ import 'package:flutter_app/pages/start_page.dart';
 import 'package:flutter_app/pages/image_page.dart';
 import 'package:flutter_app/pages/change_name.dart';
 import 'package:flutter_app/pages/form_page.dart';
+import 'package:flutter_app/pages/list_page.dart';
 import 'package:flutter_app/app_state.dart';
 
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         ChangeNamePage.nav_url: (context) => ChangeNamePage(),
         FormPage.nav_url: (context) => FormPage(),
         ImagePage.nav_url: (context) => ImagePage(),
+        ListPage.nav_url: (context) => ListPage(),
       },
     );
   }
