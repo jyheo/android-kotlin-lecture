@@ -1,5 +1,5 @@
 ---
-marp: true
+marp: false
 paginate: true
 theme: my-theme
 headingDivider: 2
@@ -136,6 +136,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 - 안드로이드 스튜디오에서 Run > Run 'main.dart' 로 실행
 - 에뮬레이터(또는 디바이스)에 실행되는 것 확인
     - 오른쪽 아래 + 버튼을 누르면 가운데 숫자 증가함
+
 ![bg right:25% w:250](images/flutter_demo.png)
 
 ## 개발환경 동작 확인
@@ -158,9 +159,11 @@ Doctor summary (to see all details, run flutter doctor -v):
     }
   }
   ```
+
 ## 개발환경 동작 확인
 - Hot Reload 테스트
 - 'Flutter Demo Home Page' 대시 'Hello, Flutter' 로 변경 후 저장
+
 ![bg right:25% w:250](images/flutter_hello.png)
 
 
@@ -453,6 +456,7 @@ class MyApp extends StatelessWidget {
 void main() => runApp(MyApp());
 ```
 - TextField에 입력하고 버튼을 누르면 Text의 내용이 변경됨
+
 ![bg right:25% w:300](images/flutter_state.png)
 
 
