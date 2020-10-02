@@ -248,7 +248,7 @@ void main() {
 ![bg right:25% w:300](images/flutter_hello3.png)
 
 ## Hello, Flutter - 완성
-- StatelessWidget vs. StatefullWidget (뒤에서 좀 더 설명함)
+- StatelessWidget vs. StatefulWidget (뒤에서 좀 더 설명함)
 - 두 위젯 중 하나를 상속하여 커스텀 위젯을 만드는 형태로 UI를 작성하는게 일반적
   - build() 메소드를 재정의 하여 커스텀 위젯을 만듬
 ```dart
@@ -394,11 +394,11 @@ void main() => runApp(MyApp());
 
 
 ## 상태 저장
-- StatelessWidget vs. StatefullWidget
+- StatelessWidget vs. StatefulWidget
 - StatelessWidget은 상태가 변하지 않음
   - 예) Icon, IconButton, Text
   - StatelessWidget을 상속하여 만듬
-- StatefullWidget은 사용자 인터랙션이나 데이터를 받음에 따라 상태가 동적으로 변함
+- StatefulWidget은 사용자 인터랙션이나 데이터를 받음에 따라 상태가 동적으로 변함
   - 예) Checkbox, Radio, Slider, InkWell, Form, TextField
   - StatefulWidget과 State<>를 상속하여 커스텀 위젯을 만듬
   - 사용자가 관리할 상태들을 State 객체에 저장되고, 상태가 바뀌면 setState()를 호출하여 시스템이 위젯을 다시 그리도록 함
@@ -457,7 +457,7 @@ void main() => runApp(MyApp());
 
 
 ## 상태 저장 - TextField
-- MyForm은 StatefullWidget을 상속하고 createState() 만 재정의 함
+- MyForm은 StatefulWidget을 상속하고 createState() 만 재정의 함
   - createState는 State<MyForm>을 상속한 _MyFormState 객체를 리턴하면 됨
 - _MyFormState는 State<MyForm>을 상속하고 여기에서 커스텀 위젯을 만드는 build()를 재정의 함
 - _MyFormState에는 build() 재정의 뿐 아니라 관리할 상태 값들을 관리함
@@ -589,7 +589,7 @@ void main() => runApp(MyApp());
   - 예를 들어 Text()의 내용을 변경하기 위해서는 Text()가 참조하는 상태(문자열)를 변경하고 Text()가 포함된 상위 위젯을 다시 빌드하도록 함
   - 앞의 TextField 예제가 이런 방식을 사용한 것임
     - State<> 에서 상태를 관리하고, 다시 빌드하도록 setState()를 호출한 것임
-  - 특정 위젯 내에서 상태관리는 이렇게 StatefullWidget을 활용하면 되지만,
+  - 특정 위젯 내에서 상태관리는 이렇게 StatefulWidget을 활용하면 되지만,
 - 앱 전체가 공유하는 상태를 관리하려고 한다면?
 - ChangeNotifier와 provider 라이브러리를 사용하여 앱 전체에서 접근 가능한 상태 관리를 할 수 있음
   - ChangeNotifier : 관리할 상태를 가지고 있으며, 상태가 변경될 때 리스너들에게 알림
@@ -703,7 +703,7 @@ void main() => runApp(ChangeNotifierProvider(
 
 
 ## 앱 상태 관리
-- State<StatefullWidget> 사용 방법과 ChangeNotifier의 사용
+- State<StatefulWidget> 사용 방법과 ChangeNotifier의 사용
   - 특정 위젯 내에서 상태 관리를 위해서는 State<> 사용
   - 앱 전체에서 상태 관리를 위해서는 ChangeNotifier 사용
 - 다른 상태 관리 라이브러리들도 존재
