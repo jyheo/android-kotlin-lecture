@@ -2,7 +2,6 @@ package com.example.room
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.room.databinding.ActivityMainBinding
 import kotlinx.coroutines.runBlocking
 
@@ -15,11 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //binding.recyclerview.adapter = MyAdapter(List<Student>(0))
-        binding.recyclerview.layoutManager = LinearLayoutManager(this)
-        binding.recyclerview.setHasFixedSize(true)
-
 
         myDao = MyDatabase.getDatabase(this).getMyDao()
         runBlocking {
@@ -44,10 +38,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.toString()
             binding.textStudentList.text = str
-            binding.recyclerview.adapter = MyAdapter(it)
         }
-
-
 
         binding.queryStudent.setOnClickListener {
             val id = binding.editStudentId.text.toString().toInt()
