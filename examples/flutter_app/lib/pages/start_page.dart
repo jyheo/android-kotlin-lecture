@@ -68,11 +68,11 @@ class _ScaffoldBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
+            ElevatedButton(
                 child: Text('Show SnackBar'),
                 onPressed: () => showCustomSnackBar(context, 'Hi! I am a SnackBar.')
             ),
-            RaisedButton(
+            ElevatedButton(
                 child: Text('Show AlertDialog'),
                 onPressed: () => showCustomDialog(context, "Alert Dialog", "This is the message of this Dialog.")
             ),
