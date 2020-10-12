@@ -246,67 +246,28 @@ dependencies {
     - 추가한 사용자 email/password로 로그인 성공하면
     - MainActivity에 User UID가 표시됨
     - MainActivity에서 Sing Out 버튼을 누르면 로그 아웃
+- 전체 예제 코드
+    - https://github.com/jyheo/android-kotlin-lecture/tree/master/examples/firebasetest
 
 ![bg right:30% w:300px](images/firebase_auth_run.png)
 
 
-## FirebaseUI
+## 참고 - FirebaseUI
 - FirebaseUI
     - https://firebase.google.com/docs/auth/android/firebaseui
-- build.gradle
-    ```
-    dependencies {
-        // ...
-        implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
-
-        // Required only if Facebook login support is required
-        // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
-        implementation 'com.facebook.android:facebook-android-sdk:4.x'
-
-        // Required only if Twitter login support is required
-        // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
-        implementation 'com.twitter.sdk.android:twitter-core:3.x'
-    }
-    ```
+- 다양한 소셜 로그인을 포함하는 액티비티를 제공
+- startActivityForResult()로 시작하고 로그인 결과를 받아서 사용하면 됨
 
 ![bg right:30% height:80%](https://firebase.google.com/docs/auth/images/firebaseui-android.png)
 
-## FirebaseUI
 
-```java
-List<AuthUI.IdpConfig> providers = Arrays.asList(
-        new AuthUI.IdpConfig.EmailBuilder().build(),
-        new AuthUI.IdpConfig.PhoneBuilder().build(),
-        new AuthUI.IdpConfig.GoogleBuilder().build(),
-        new AuthUI.IdpConfig.FacebookBuilder().build(),
-        new AuthUI.IdpConfig.TwitterBuilder().build());
-
-// Create and launch sign-in intent
-startActivityForResult(
-        AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build(),     RC_SIGN_IN);  // requestCode for onActivityResult
-```
-
-## FirebaseUI
-
-```java
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == RC_SIGN_IN) {
-        IdpResponse response = IdpResponse.fromResultIntent(data);
-        if (resultCode == RESULT_OK) {
-            // Successfully signed in
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        } else {
-            if (response) {
-                response.getError().getErrorCode()
-            } else {
-                // user canceled the sign-in flow using the back button
-            }            
-        }
-    }
-}
-```
+## 실습 
+- 예제의 LoginActivity에 [Sign Up] 버튼 추가하고 버튼을 누르면 새로 계정을 생성하도록 한다.
+    - 계정 생성이 성공하면 로그인 상태가 되기 때문에 Sing In과 마찬가지로 MainActivity를 시작함
+- MainActivity에서 [Sing Out] 버튼을 누르면 로그아웃하도록 하고, LoginActivity를 시작하게 함
+- 실행 결과 (예시 동영상 참고)
+    - 실행하면 LoginActivity가 보이고,
+    - 로그인이 성공하면 MainActivity에 User UID가 표시됨
+    - 로그아웃을 하면 LoginActivity가 나타나게 하고,
+    - 이번에는 Sing Up을 하여 계정을 새로 만들도록 한다.
+    - Firebase 콘솔의 Authentication의 Users에서 추가된 사용자를 확인한다.
