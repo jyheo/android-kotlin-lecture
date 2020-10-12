@@ -1,6 +1,7 @@
 # no platform-specific code
 android/
 ios/
+web/
 test/
 .*
 !.gitignore
