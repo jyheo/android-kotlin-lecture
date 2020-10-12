@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "679518642003",
+    "firebase_url": "https://android-kotlin-lecture.firebaseio.com",
+    "project_id": "android-kotlin-lecture",
+    "storage_bucket": "android-kotlin-lecture.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679518642003:android:934103b9c7e99873044ba6",
+        "android_client_info": {
+          "package_name": "com.example.firebasetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679518642003-t10emt4fph7l5gv9pn6cr35rl8hqcauh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjitBsa7S9uNQKpR5MSuXykig2iQoDg_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679518642003-t10emt4fph7l5gv9pn6cr35rl8hqcauh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
