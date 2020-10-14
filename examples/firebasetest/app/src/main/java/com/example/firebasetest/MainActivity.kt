@@ -29,5 +29,11 @@ class MainActivity : AppCompatActivity() {
             auth.signOut()
             finish()
         }
+
+        binding.buttonStorage.setOnClickListener {
+            startActivity(
+                Intent(this, StorageActivity::class.java))
+        }
+        
     }
 }
