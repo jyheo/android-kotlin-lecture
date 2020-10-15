@@ -159,47 +159,43 @@ class StorageActivity : AppCompatActivity() {
 <!-- _class: lead -->
 
 ## Remote Config
-- 앱의 동작을 원격 클라우드에서 변경할 수 있음
-![](images/firebaserc.png) ![](images/firebaserc2.png)
+- 설정을 원격 클라우드(Firebase 서버)에서 가져와서 설정에 따라 앱의 동작을 다르게 할 수 있음
+    - Firebase 콘솔에서 설정을 변경하고
+    - 앱에서 변경된 설정을 주기적으로 가져옴
 
 
-## Remote Config
-- 
-    ```java
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
-    private ActivityMainBinding binding;
+## Remote Config - Firebase Console
+- 콘솔에서 설정 추가/변경
+![w:800px](images/firebase_rc_addparam.png)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
-        mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() == null) {
-            finish();
-            return;
-        }
+## Remote Config - Firebase Console
+- 콘솔에서 설정 추가/변경
+![w:800px](images/firebase_rc_published.png)
 
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(3600) // For development only not for production!, default is 12 hours
-                .build();
-        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);        
+
+## Remote Config - 안드로이드 앱
+- 모듈의 build.gradle
+    ```gradle
+    dependencies {
+        // Import the BoM for the Firebase platform
+        implementation platform('com.google.firebase:firebase-bom:25.12.0')
+
+        // Declare the dependencies for the Remote Config and Analytics libraries
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        implementation 'com.google.firebase:firebase-config-ktx'
     }
     ```
-    - [github.com/jyheo/android-java-examples/.../FirebaseTest/.../MainActivity.java#L54](https://github.com/jyheo/android-java-examples/blob/master/FirebaseTest/app/src/main/java/com/example/jyheo/firebasetest/MainActivity.java#L54)
 
 
-## Remote Config
+## Remote Config - 안드로이드 앱
 - 기본 설정 파일 만들기
     - New > Android Resource File
     - R.xml.remote_config_defaults
-    ![w:700px](images/firebasercdefault.png)
+    ![w:700px](images/firebase_rc_defaults.png)
 
 
-## Remote Config
+## Remote Config - 안드로이드 앱
 - res/xml/remote_config_defaults.xml
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
@@ -214,46 +210,48 @@ class StorageActivity : AppCompatActivity() {
         </entry>
     </defaultsMap>
     ```
-    - [github.com/jyheo/android-java-examples/.../FirebaseTest/.../remote_config_defaults.xml](https://github.com/jyheo/android-java-examples/blob/master/FirebaseTest/app/src/main/res/xml/remote_config_defaults.xml)
 
 
-## Remote Config
-- Firebase에서 설정 가져와서 적용
-    ```java
-    public void onFetchButton(View v) {
-        mFirebaseRemoteConfig.fetchAndActivate()
-                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Boolean> task) {
-                        if (task.isSuccessful()) {
-                            boolean updated = task.getResult();
-                            Log.d(TAG, "Config params updated: " + updated);
-                        } else {
-                            Log.d(TAG, "Fetch failed");
-                        }
-                        displayConfig();  // 가져온 설정 읽기(다음 슬라이드)
-                    }
-                });
+## Remote Config - 안드로이드 앱
+- Firebase.remoteConfig
+    ```kotlin
+    val remoteConfig = Firebase.remoteConfig
+    val configSettings = remoteConfigSettings {
+        minimumFetchIntervalInSeconds = 1 // For test purpose only, 3600 seconds for production
     }
+    remoteConfig.setConfigSettingsAsync(configSettings)
+    remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
     ```
-    - [github.com/jyheo/android-java-examples/.../FirebaseTest/.../MainActivity.java#L95](https://github.com/jyheo/android-java-examples/blob/master/FirebaseTest/app/src/main/java/com/example/jyheo/firebasetest/MainActivity.java#L95)
+    - minimumFetchIntervalInSeconds: Firebase 서버에서 마지막으로 설정을 가져온 이후 최소 이 시간이 지나야 서버에 다시 요청함
+    - setDefaultsAsync() : 로컬에 저장된 기본 값, 서버에서 설정을 가져오지 않았을 때는 이 값을 사용하게 됨
 
 
 ## Remote Config
-- 가져온 설정 읽기
-    ```java
-    private void displayConfig() {
-        boolean cheat_enabled = mFirebaseRemoteConfig.getBoolean("cheat_enabled");
-        binding.textViewCheat.setText("cheat_enabled=" + cheat_enabled);
-        long price = mFirebaseRemoteConfig.getLong("your_price");
-        binding.textViewPrice.setText("your_price is " + price);
-    }
+- Firebase 서버에서 설정 가져와서 적용
+- 적용된 설정 값을 읽기
+    ```kotlin
+    remoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this) {
+                    val your_price = remoteConfig.getLong("your_price")
+                    val cheat_enabled = remoteConfig.getBoolean("cheat_enabled")
+                    binding.textYourPrice.text = your_price.toString()
+                    binding.textCheatEnabled.text = cheat_enabled.toString()
+                }
     ```
-    - [github.com/jyheo/android-java-examples/.../FirebaseTest/.../MainActivity.java#L88](https://github.com/jyheo/android-java-examples/blob/master/FirebaseTest/app/src/main/java/com/example/jyheo/firebasetest/MainActivity.java#L88)
+    - getLong, getBoolean 등의 메소드에 키를 주고 값을 리턴 받음
 
 
 ## Remote Config
-- Firebase 콘솔에서 설정 만들기
-![](images/firebaseconsolerc.png)
+- [Fetch and Activate] 버튼을 누르면 ```remoteConfig.fetchAndActivate()``` 를 호출
+- 설정 값을 읽어서 텍스트 뷰에 표시함
+    - ``` remoteConfig.getLong("your_price") ```
+    - ```remoteConfig.getBoolean("cheat_enabled")```
+
+![bg right:30% w:250px](images/firebase_rc_fetch.png)
 
 
+## 실습
+- Remote Config에 season 키를 추가
+    - 값으로는 spring, summer, fall, winter
+- 액티비티가 시작되면
+    - season에 따라 계절 그림을 Storage에서 받아서 액티비티에 표시
