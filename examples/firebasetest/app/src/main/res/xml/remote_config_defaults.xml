@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap xmlns:android="http://schemas.android.com/apk/res/android">
+    <entry>
+        <key>your_price</key>
+        <value>100</value>
+    </entry>
+    <entry>
+        <key>cheat_enabled</key>
+        <value>false</value>
+    </entry>
+</defaultsMap>

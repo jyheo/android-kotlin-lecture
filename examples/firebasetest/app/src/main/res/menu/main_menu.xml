@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/storage"
+        android:title="Storage" />
+    <item
+        android:id="@+id/remote_config"
+        android:title="Remote Config" />
+</menu>
