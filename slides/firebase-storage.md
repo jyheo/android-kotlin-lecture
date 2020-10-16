@@ -11,13 +11,65 @@ backgroundImage: url('images/background.png')
 
 # Firebase
 <!-- _class: lead -->
-### Storage, RemoteConfig
+### Crashlytics, Storage, RemoteConfig
 ### 허준영(jyheo@hansung.ac.kr)
+
+
+## Firebase Crashlytics
+- 앱이 비정상 종료되어을 때 예외 로그를 Firebase에 남기고 확인할 수 있게 해줌
+- 프로젝트와 앱 모듈의 build.gradle 설정만 해주면 됨
+- 프로젝트 build.gradle
+    ```gradle
+    buildscript {
+        repositories {
+            google()
+        }
+
+        dependencies {
+            classpath 'com.google.gms:google-services:4.3.4'
+
+            // Add the Crashlytics Gradle plugin (be sure to add version
+            // 2.0.0 or later if you built your app with Android Studio 4.1).
+            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+        }
+    }
+    ```
+
+## Firebase Crashlytics
+- 앱 모듈 build.gradle
+    ```gradle
+    apply plugin: 'com.google.firebase.crashlytics'
+
+    dependencies {
+        ...
+
+        implementation platform('com.google.firebase:firebase-bom:25.12.0')
+        implementation 'com.google.firebase:firebase-analytics-ktx'
+
+        implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    }
+    ```
+- Gradle Sync 후에 앱 빌드하고 실행하면 됨
+- 고의로 Exception을 발생하면 5분 내에 Crashlytics에서 확인 가능
+    - 예를 들어 ``` setContentViwe(null) ```
+
+
+## Firebase Crashlytics
+- FIrebase Console에서 Crashlytics 확인
+![w:900px](images/firebase_crash.png)
+
+## Firebase Crashlytics
+- FIrebase Console에서 Crashlytics 확인
+![w:900px](images/firebase_crash_2.png)
+
+
+## Firebase Crashlytics
+- FIrebase Console에서 Crashlytics 확인
+![w:900px](images/firebase_crash_3.png)
 
 
 # Firebase Storage
 <!-- _class: lead -->
-
 
 
 ## Storage
