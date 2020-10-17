@@ -67,16 +67,16 @@ backgroundImage: url('images/background.png')
 
 ## Cloud Firestore - 안드로이드 앱
 - 앱 모듈 build.gradle
-```gradle
-dependencies {
-    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    ```gradle
+    dependencies {
+        // Import the BoM for the Firebase platform
+        implementation platform('com.google.firebase:firebase-bom:25.12.0')
 
-    // Declare the dependency for the Cloud Firestore library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-firestore-ktx'
-}
-```
+        // Declare the dependency for the Cloud Firestore library
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        implementation 'com.google.firebase:firebase-firestore-ktx'
+    }
+    ```
 
 ## Cloud Firestore - 안드로이드 앱 - 레퍼런스 객체
 - Collection이나 Document에 대한 레퍼런스를 얻고,
@@ -287,14 +287,20 @@ val itemsCollectionRef = db.collection("items") // items는 Collection ID
         ...
     ```
 
+## Cloud Firestore - 안드로이드 앱
+- 예제 소스 코드 전체
+    - https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/firebasetest/app/src/main/java/com/example/firebasetest/FirestoreActivity.kt
+
+
 # Realtime Database
 <!-- _class: lead -->
 
 ## Realtime Database
 - 연결된 모든 클라이언트들이 클라우드 데이터베이스와 싱크를 할 수 있음
-    - 읽기는 비동기식, 쓰기는 동기식으로 프로그래밍
 - 오프라인이 되더라도 데이터베이스를 사용할 수 있음
 - 데이터는 테이블이 아니라 JSON 트리 형태로 저장됨
+
+![bg right:35% w:400px](images/firebase_rtdb_data.png)
 
 ## Realtime Database - Firebase Console
 - https://console.firebase.google.com/
@@ -306,132 +312,190 @@ val itemsCollectionRef = db.collection("items") // items는 Collection ID
 ![w:700px](images/firebase_rtdb_create_2.png)
 - 테스트 모드로 선택, 나중에 security rule 추가
 
+
+## Realtime Database - Firebase Console
+- Rule
+![w:800px](images/firebase_rtdb_rule.png)
+    - 전체는 기본적으로 접근 불가
+    - items/ 밑의 데이터는 authentication 후에 접근 가능
+
+
 ## Realtime Database - 안드로이드 앱
 - 앱 모듈 build.gradle
-```gradle
-dependencies {
-    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    ```gradle
+    dependencies {
+        // Import the BoM for the Firebase platform
+        implementation platform('com.google.firebase:firebase-bom:25.12.0')
 
-    // Declare the dependency for the Realtime Database library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-database-ktx'
-}
-```
+        // Declare the dependency for the Realtime Database library
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        implementation 'com.google.firebase:firebase-database-ktx'
+    }
+    ```
+
+## Realtime Database - 안드로이드 앱 - 레퍼런스 가져오기
+- Firebase.database.getReference( 경로명 )
+    ```kotlin
+    val database = Firebase.database
+    val itemsRef = database.getReference("items")
+    ```
+    - 루트의 items에 대한 레퍼런스
+- 레퍼런스의 child( 경로명 ) 메소드로 자식 노드의 레퍼런스 가져옴
+    ```kotlin
+    itemsRef.child("123").child("name")
+    ```
+![bg right:35% w:400px](images/firebase_rtdb_data.png)
+
 
 ## Realtime Database - 안드로이드 앱 - 데이터 쓰기
 - 데이터베이스 레퍼런스를 가져와서 setValue()를 호출하여 씀
-    ```java
-    public void onWriteData(View v) {
-        String db_value = binding.dbValue.getText().toString();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");									
+    ```kotlin
+    val name = binding.editItemName.text.toString()
 
-        myRef.setValue(db_value);
+    val price = binding.editPrice.text.toString().toInt()
+    val autoID = binding.checkAutoID.isChecked
+    val itemID = binding.editID.text.toString()
+
+    val itemMap = hashMapOf(  // 여러 자식(키,값)을 한번에 쓰기
+        "name" to name,
+        "price" to price
+    )
+    if (autoID) { // key를 자동으로 생성
+        val itemRef = itemsRef.push()
+        itemRef.setValue(itemMap)
+    } else {  // 주어진 itemID로 키를 만듬
+        val itemRef = itemsRef.child(itemID)
+        itemRef.setValue(itemMap)
     }
     ```
-    ![h:250](images/realtimedb.png)
-    - [github.com/jyheo/android-java-examples/.../FirebaseTest/.../MainActivity.java#L111](https://github.com/jyheo/android-java-examples/blob/master/FirebaseTest/app/src/main/java/com/example/jyheo/firebasetest/MainActivity.java#L111)
+![bg right:35% w:400px](images/firebase_rtdb_data.png)
 
 
-## 데이터 읽기
+## Realtime Database - 안드로이드 앱 - 데이터 읽기
 - ValueEventListener를 등록, 해당 값이 변경될 때마다 알려줌
-- ValueEventListener를 등록하고 한번만 알려주길 원하면 addListenerForSingleValueEvent()를 사용
 - ValueEventListener등록을 취소: removeEventListener()
-    ```java
-    myRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            String value = dataSnapshot.getValue(String.class);
-            Log.d(TAG, "Value is: " + value);
+    ```kotlin
+    itemsRef.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val items = mutableListOf<Item>()
+            for (child in dataSnapshot.children) {
+                items.add(Item(child.key ?: "", child.value as Map<*, *>))
+            }
+            adapter?.updateList(items)
         }
-
-        @Override
-        public void onCancelled(DatabaseError error) {
-            Log.w(TAG, "Failed to read value.", error.toException());					
+        override fun onCancelled(error: DatabaseError) {
+            // Failed to read value
         }
-    });
-    ```
-    - [github.com/jyheo/android-java-examples/.../FirebaseTest/.../MainActivity.java#L119](https://github.com/jyheo/android-java-examples/blob/master/FirebaseTest/app/src/main/java/com/example/jyheo/firebasetest/MainActivity.java#L119)
-
-
-
-## 데이터 구조
-- JSON 트리
-- child(): 자식 노드의 DatabaseReference를 가져옴
-    ```java
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("users");
-    String userid = "aloverlace"
-    String username = "Ada Lovelace"
-    myRef.child(userid).child("name").setValue(username)
-    ```
-    ![](images/realtimedb2.png)
-
-
-## 데이터 구조
-- push(), 고유한 아이디를 갖는 자식 노드를 생성함
-- Map<String, Object> 형태의 값을 저장하는 예
-    ```java
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("posts");
-    String key = myRef.push().getKey();
-    HashMap<String, Object> postValues = new HashMap<>();
-    postValues.put("uid", "aloverlace");
-    postValues.put("author", "Ada Lovelace");
-    postValues.put("title", "hello post");
-    postValues.put("body", "hello body");
-    postValues.put("starCount", 0);
-
-    myRef.child(key).setValue(postValues);
+    })
     ```
 
-![bg right:30% w:400](images/realtimedb3.png)
+## Realtime Database - 안드로이드 앱 - 데이터 읽기
+- ValueEventListener를 등록하고 한번만 알려주길 원하면 addListenerForSingleValueEvent()를 사용
+    ```kotlin
+    private fun queryItem(itemID: String) {
+        itemsRef.child(itemID).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val map = dataSnapshot.value as Map<*, *>
+                binding.editID.setText(itemID)
 
+                binding.editItemName.setText(map["name"].toString())
+                binding.editPrice.setText(map["price"].toString())
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+            }
+        })
+    }
+    ```
 
+## Realtime Database - 안드로이드 앱 - 데이터 쓰기/변경
+- 업데이트 하려는 레퍼런스를 찾아서 setValue()
+    - 해당 노드가 없으면 새로 만들게 됨
+    ```kotlin
+    val itemID = binding.editID.text.toString()
+    val price = binding.editPrice.text.toString().toInt()
 
-## 트랜잭션
+    itemsRef.child(itemID).child("price").setValue(price)
+        .addOnSuccessListener { queryItem(itemID) }
+    ```
+- updateChildren() 으로 자식 키/값을 한번에 업데이트
+    ```kotlin
+    val itemMap = hashMapOf(
+        "price" to price
+    )
+    itemsRef.child(itemID).updateChildren(itemMap as Map<String, Any>)
+        .addOnSuccessListener { queryItem(itemID) }
+    ```
+
+## Realtime Database - 안드로이드 앱 - 데이터 삭제
+- 삭제하려는 노드 레퍼런스 찾아서 removeValue()
+    ```kotlin
+    private fun deleteItem() {
+        val itemID = binding.editID.text.toString()
+        if (itemID.isEmpty()) {
+            Snackbar.make(binding.root, "Input ID!", Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        itemsRef.child(itemID).removeValue()
+            .addOnSuccessListener {  }
+    }
+    ```
+
+## Realtime Database - 안드로이드 앱 - 트랜잭션
 - 트랜잭션 처리, runTransaction()
-    ```java
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("posts/-Kz4JAW5cxfcezCgBjRi");
-    myRef.runTransaction(new Transaction.Handler() {
-        @Override
-        public Transaction.Result doTransaction(MutableData mutableData) {
-             Long starCount = mutableData.child("starCount").getValue(Long.class);
-            starCount++;
-             mutableData.child("starCount").setValue(starCount);
-            return Transaction.success(mutableData);
+```kotlin
+private fun incrPrice() {
+        val itemID = binding.editID.text.toString()
+        if (itemID.isEmpty()) {
+            Snackbar.make(binding.root, "Input ID!", Snackbar.LENGTH_SHORT).show()
+            return
         }
 
-        @Override
-        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-            Log.d(TAG, "Transaction:onComplete:" + databaseError);
-        }
-    });
-    ```
+        itemsRef.child(itemID).child("price")
+            .runTransaction(object : Transaction.Handler {
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                var p = mutableData.value.toString().toIntOrNull() ?: 0
+                p++
+                mutableData.value = p
+                return Transaction.success(mutableData)
+            }
+
+            override fun onComplete(
+                databaseError: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?
+            ) {
+                // Transaction completed
+                queryItem(itemID)
+            }
+        })
+    }
+```
 
 
-## 데이터 정렬과 필터링
+## Realtime Database - 안드로이드 앱 - 데이터 정렬
 - 데이터 정렬: orderByChild(), orderByKey(), orderByValue()
-    ```java
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    Query TopPostsQuery = databaseReference.child("posts").orderByChild("starCount");
-    TopPostsQuery.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-             for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                // TODO: handle the post
+    ```kotlin
+    val query = itemsRef.orderByChild("price")
+    query.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (child in dataSnapshot.children) {
+                println("${child.key} - ${child.value}")
             }
         }
-        ...
-    }
+        override fun onCancelled(error: DatabaseError) {
+            // Failed to read value
+        }
+    })
     ```
-- 필터링: limitToFirst(), limitToLast()
-    ```java
-    // Last 100 posts, these are automatically the 100 most recent
-    Query recentPostsQuery = databaseReference.child("posts").limitToFirst(100);
+- 결과 수 제한: limitToFirst(), limitToLast()
+    ```kotlin
+    val query = itemsRef.orderByChild("price").limitToFirst(100)
     ```
 
-## 종합 예제
-- https://github.com/firebase/quickstart-android/tree/master/database
+## Realtime Database - 안드로이드 앱
+- 예제 소스 코드 전체
+    -  https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/firebasetest/app/src/main/java/com/example/firebasetest/RealtimeDBActivity.kt
+
+
+## 실습
