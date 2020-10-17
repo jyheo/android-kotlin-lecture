@@ -1,15 +1,12 @@
 package com.example.firebasetest
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasetest.databinding.ActivityFirestoreBinding
@@ -31,7 +28,7 @@ class MyAdapter(private val context: Context, private var items: List<Item>)
     : RecyclerView.Adapter<MyViewHolder>() {
 
     fun interface OnItemClickListener {
-        fun onClick(student_id: String)
+        fun onItemClick(student_id: String)
     }
 
     private var itemClickListener: OnItemClickListener? = null
@@ -57,11 +54,11 @@ class MyAdapter(private val context: Context, private var items: List<Item>)
         holder.binding.textName.text = item.name
         holder.binding.textID.setOnClickListener {
             //AlertDialog.Builder(context).setMessage("You clicked ${student.name}.").show()
-            itemClickListener?.onClick(item.id)
+            itemClickListener?.onItemClick(item.id)
         }
         holder.binding.textName.setOnClickListener {
             //AlertDialog.Builder(context).setMessage("You clicked ${student.name}.").show()
-            itemClickListener?.onClick(item.id)
+            itemClickListener?.onItemClick(item.id)
         }
 
     }
