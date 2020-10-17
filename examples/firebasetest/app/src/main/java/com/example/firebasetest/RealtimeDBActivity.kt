@@ -12,8 +12,8 @@ import com.google.firebase.ktx.Firebase
 
 class RealtimeDBActivity : AppCompatActivity() {
     lateinit var binding: ActivityRealtimeDbBinding
-    val database = Firebase.database
-    val itemsRef = database.getReference("items")
+    private val database = Firebase.database
+    private val itemsRef = database.getReference("items")
     private var adapter: MyAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +58,18 @@ class RealtimeDBActivity : AppCompatActivity() {
                     items.add(Item(child.key ?: "", child.value as Map<*, *>))
                 }
                 adapter?.updateList(items)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+            }
+        })
+
+        val query = itemsRef.orderByChild("price")
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (child in dataSnapshot.children) {
+                    println("${child.key} - ${child.value}")
+                }
             }
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
