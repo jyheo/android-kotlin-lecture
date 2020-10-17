@@ -9,7 +9,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 
 data class Item(val id: String, val name: String, val price: Int) {
     constructor(doc: QueryDocumentSnapshot) :
-            this(doc.id, doc["name"].toString(), doc["price"].toString().toInt())
+            this(doc.id, doc["name"].toString(), doc["price"].toString().toIntOrNull() ?: 0)
+    constructor(key: String, map: Map<*, *>) :
+            this(key, map["name"].toString(), map["price"].toString().toIntOrNull() ?: 0)
 }
 
 class MyViewHolder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root)
