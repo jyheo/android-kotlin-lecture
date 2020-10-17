@@ -11,13 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RealtimeDBActivity"></activity>
-        <activity android:name=".FirestoreActivity" />
+        <activity android:name=".RealtimeDBActivity"
+            android:label="Firebase Realtime DB"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".FirestoreActivity"
+            android:label="Firebase Cloud Firestore"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".RemoteConfigActivity"
+            android:label="Firebase Remote Config"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".StorageActivity"
+            android:label="Firebase Storage"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LoginActivity"
