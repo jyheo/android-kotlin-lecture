@@ -1,12 +1,15 @@
 package com.example.firebasetest
 
 import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasetest.databinding.ActivityFirestoreBinding
@@ -106,6 +109,10 @@ class FirestoreActivity : AppCompatActivity() {
 
         binding.buttonIncrPrice.setOnClickListener {
             incrPrice()
+        }
+
+        binding.buttonQuery.setOnClickListener {
+            queryWhere()
         }
 
         binding.buttonDelete.setOnClickListener {
@@ -210,6 +217,25 @@ class FirestoreActivity : AppCompatActivity() {
             it.update(docRef, "price", price)
         }
             .addOnSuccessListener { queryItem(itemID) }
+    }
+
+    private fun queryWhere() {
+        val p = 100
+        binding.progressWait.visibility = View.VISIBLE
+        itemsCollectionRef.whereLessThan("price", p).get()
+            .addOnSuccessListener {
+                binding.progressWait.visibility = View.GONE
+                val items = arrayListOf<String>()
+                for (doc in it) {
+                    items.add("${doc["name"]} - ${doc["price"]}")
+                }
+                AlertDialog.Builder(this)
+                    .setTitle("Items which price less than $p")
+                    .setItems(items.toTypedArray(), { dialog, which ->  }).show()
+            }
+            .addOnFailureListener {
+                binding.progressWait.visibility = View.GONE
+            }
     }
 
     private fun deleteItem() {
