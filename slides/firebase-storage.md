@@ -15,6 +15,13 @@ backgroundImage: url('images/background.png')
 ### 허준영(jyheo@hansung.ac.kr)
 
 
+## Firebase 설정
+- 안드로이드 앱 개발 환경과 Firebase 연결이 완료된 상태에서 시작
+    - 연결 방법은 Firebase-Auth 강의 자료 참고
+        - build.gradle 설정
+        - google-services.json 다운로드
+
+
 ## Firebase Crashlytics
 - 앱이 비정상 종료되어을 때 예외 로그를 Firebase에 남기고 확인할 수 있게 해줌
 - 프로젝트와 앱 모듈의 build.gradle 설정만 해주면 됨

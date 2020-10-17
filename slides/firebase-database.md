@@ -15,6 +15,13 @@ backgroundImage: url('images/background.png')
 ### 허준영(jyheo@hansung.ac.kr)
 
 
+## Firebase 설정
+- 안드로이드 앱 개발 환경과 Firebase 연결이 완료된 상태에서 시작
+    - 연결 방법은 Firebase-Auth 강의 자료 참고
+        - build.gradle 설정
+        - google-services.json 다운로드
+
+
 ## Cloud Firestore vs. Realtime Database
 - Firebase는 두 가지 데이터베이스를 제공
 - Realtime Database가 먼저 생긴 것으로 업데이트가 빈번하게 일어날 때 사용
@@ -499,3 +506,16 @@ private fun incrPrice() {
 
 
 ## 실습
+- Firebase Cloud Firestore를 이용하여 아래 요구사항을 구현
+- 데이터베이스에는 상품(Items), 사용자(Users), 장바구니(Carts)
+- MainActivity에는 장바구니 버튼과 상품 목록이 있음
+- 상품 목록에서 상품을 선택하면 자세히 보기 액티비티(ItemActivity)
+- ItemActivity에는
+    - 상품 이름, 가격, 설명, 이미지(모든 상품이 같은 이미지여도 괜찮음)
+    - 장바구니에 넣기 버튼
+        - 장바구니 버튼을 누르면 장바구니에 상품 넣음
+    - MainActivity로 되돌아가는 Up 버튼(ItemActivity의 parentActivityName을 MainActivity로 설정)
+- MainActivity의 옵션 메뉴에서 장바구니를 선택하면 장바구나 액티비티(CartActivity) 시작
+- CartActivity에는
+    - 상품 이름, 가격, 삭제 버튼 목록을 보여줌
+    - 삭제 버튼을 누르면 해당 상품을 장바구니에서 제거
