@@ -1,71 +1,15 @@
 package com.example.firebasetest
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasetest.databinding.ActivityFirestoreBinding
-import com.example.firebasetest.databinding.ItemBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
-
-data class Item(val id: String, val name: String, val price: Int) {
-    constructor(doc: QueryDocumentSnapshot) :
-            this(doc.id, doc["name"].toString(), doc["price"].toString().toInt())
-}
-
-class MyViewHolder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root)
-
-class MyAdapter(private val context: Context, private var items: List<Item>)
-    : RecyclerView.Adapter<MyViewHolder>() {
-
-    fun interface OnItemClickListener {
-        fun onItemClick(student_id: String)
-    }
-
-    private var itemClickListener: OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        itemClickListener = listener
-    }
-
-    fun updateList(newList: List<Item>) {
-        items = newList
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding: ItemBinding = ItemBinding.inflate(inflater, parent, false)
-        return MyViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = items[position]
-        holder.binding.textID.text = item.id
-        holder.binding.textName.text = item.name
-        holder.binding.textID.setOnClickListener {
-            //AlertDialog.Builder(context).setMessage("You clicked ${student.name}.").show()
-            itemClickListener?.onItemClick(item.id)
-        }
-        holder.binding.textName.setOnClickListener {
-            //AlertDialog.Builder(context).setMessage("You clicked ${student.name}.").show()
-            itemClickListener?.onItemClick(item.id)
-        }
-
-    }
-
-    override fun getItemCount() = items.size
-}
-
 
 class FirestoreActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFirestoreBinding
