@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RealtimeDBActivity"></activity>
+        <activity android:name=".FirestoreActivity" />
         <activity
             android:name=".RemoteConfigActivity"
             android:parentActivityName=".MainActivity" />

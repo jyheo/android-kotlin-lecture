@@ -7,4 +7,10 @@
     <item
         android:id="@+id/remote_config"
         android:title="Remote Config" />
+    <item
+        android:id="@+id/firestore"
+        android:title="Cloud Firestore" />
+    <item
+        android:id="@+id/realtime_db"
+        android:title="Realtime DB" />
 </menu>

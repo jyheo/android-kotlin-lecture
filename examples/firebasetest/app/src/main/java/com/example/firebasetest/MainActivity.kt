@@ -44,6 +44,10 @@ class MainActivity : AppCompatActivity() {
                 Intent(this, StorageActivity::class.java))
             R.id.remote_config -> startActivity(
                 Intent(this, RemoteConfigActivity::class.java))
+            R.id.firestore -> startActivity(
+                Intent(this, FirestoreActivity::class.java))
+            R.id.realtime_db -> startActivity(
+                Intent(this, RealtimeDBActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }
