@@ -314,3 +314,8 @@ class StorageActivity : AppCompatActivity() {
     - 값으로는 spring, summer, fall, winter
 - 액티비티가 시작되면
     - season에 따라 계절 그림을 Storage에서 받아서 액티비티에 표시
+    - Refresh 버튼을 누르면 season 값에 따라 그림을 업데이트함
+- Storage에 접근하기 위해 인증(로그인) 필요하도록 Rule 작성하고 인증도 포함시키는 것을 권장함
+- 무료 이미지(저작권 문제 없음)
+    - https://gongu.copyright.or.kr/gongu/main/main.do
+- 제출은 액티비티.kt 파일(zip으로 압축)과 실행 동영상만 제출
