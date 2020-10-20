@@ -224,13 +224,18 @@ class StorageActivity : AppCompatActivity() {
 
 
 ## Remote Config - Firebase Console
-- 콘솔에서 설정 추가/변경
-![w:800px](images/firebase_rc_addparam.png)
+- 콘솔 처음 화면
+![w:800px](images/firebase_rc_start.png)
 
 
 ## Remote Config - Firebase Console
 - 콘솔에서 설정 추가/변경
 ![w:800px](images/firebase_rc_published.png)
+
+
+## Remote Config - Firebase Console
+- 콘솔에서 설정 추가/변경
+![w:800px](images/firebase_rc_addparam.png)
 
 
 ## Remote Config - 안드로이드 앱
