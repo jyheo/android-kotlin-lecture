@@ -507,15 +507,19 @@ private fun incrPrice() {
 
 ## 실습
 - Firebase Cloud Firestore를 이용하여 아래 요구사항을 구현
-- 데이터베이스에는 상품(Items), 사용자(Users), 장바구니(Carts)
-- MainActivity에는 장바구니 버튼과 상품 목록이 있음
-- 상품 목록에서 상품을 선택하면 자세히 보기 액티비티(ItemActivity)
+- 데이터베이스에는 상품(Items) collection이 있음
+- Items collection의 document에는 name, price, cart 필드가 있음
+    - name은 상품 이름, String
+    - price는 상품 가격, Number
+    - cart는 장바구니에 포함 여부, Boolean
+- MainActivity에는 상품 목록을 보여주는 RecyclerView만 있음
+- 목록에서 상품을 선택하면 자세히 보기 액티비티(ItemActivity) 시작
 - ItemActivity에는
-    - 상품 이름, 가격, 설명, 이미지(모든 상품이 같은 이미지여도 괜찮음)
-    - 장바구니에 넣기 버튼
+    - 상품 이름, 가격
+    - 장바구니에 넣기/빼기 버튼
         - 장바구니 버튼을 누르면 장바구니에 상품 넣음
+        - 즉 cart를 true
+    - 장바구니에 이미 있는 상품은 빼기 버튼으로 동작
+        - 버튼을 누르면 cart를 false
     - MainActivity로 되돌아가는 Up 버튼(ItemActivity의 parentActivityName을 MainActivity로 설정)
-- MainActivity의 옵션 메뉴에서 장바구니를 선택하면 장바구나 액티비티(CartActivity) 시작
-- CartActivity에는
-    - 상품 이름, 가격, 삭제 버튼 목록을 보여줌
-    - 삭제 버튼을 누르면 해당 상품을 장바구니에서 제거
+- 제출 MainActivity.kt와 실행 동영상
