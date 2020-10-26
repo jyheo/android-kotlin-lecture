@@ -514,6 +514,7 @@ private fun incrPrice() {
     - cart는 장바구니에 포함 여부, Boolean
 - MainActivity에는 상품 목록을 보여주는 RecyclerView만 있음
 - 목록에서 상품을 선택하면 자세히 보기 액티비티(ItemActivity) 시작
+## 실습 (계속)
 - ItemActivity에는
     - 상품 이름, 가격
     - 장바구니에 넣기/빼기 버튼
@@ -522,4 +523,5 @@ private fun incrPrice() {
     - 장바구니에 이미 있는 상품은 빼기 버튼으로 동작
         - 버튼을 누르면 cart를 false
     - MainActivity로 되돌아가는 Up 버튼(ItemActivity의 parentActivityName을 MainActivity로 설정)
-- 제출 MainActivity.kt와 실행 동영상
+- ItemActivity에서 MainActivity로 되돌아가변 변경된 사항(카트 포함 여부)이 반영되어서 표시되어야 함
+- 제출 소스.zip과 실행 동영상
