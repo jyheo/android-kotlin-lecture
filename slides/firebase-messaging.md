@@ -269,3 +269,16 @@ dependencies {
 
 
 ## 실습
+- Cloud Messaging Test
+- 앱을 시작하면 FCM Token을 액티비티 화면에 표시
+- Cloud Messaging 에서 알림을 보내면
+    - 앱이 전면에서 실행중에는 액티비티에 메시지 수신 내용을 표시하고
+        - 참고 코드
+        ```kotlin
+        startActivity(
+            Intent(this, MainActivity::class.java).apply {
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                putExtra("message", msgBody)
+            })
+        ```
+    - 앱이 전면에 실행중이 아닐 때에는 알림을 표시하고 알림을 선택하면 액티비티가 시작되도록 한다.
