@@ -25,8 +25,7 @@ backgroundImage: url('images/background.png')
 ## Cloud Firestore vs. Realtime Database
 - Firebase는 두 가지 데이터베이스를 제공
 - Realtime Database가 먼저 생긴 것으로 업데이트가 빈번하게 일어날 때 사용
-    - 위치 추적 앱이나 실시간 메시징과 같은 것을 구현한다면 적합
-    - 실제로 메시징은 Firebase Messaging을 사용하면 됨
+    - 위치 추적 앱이나 실시간 채팅과 같은 것을 구현한다면 적합
 - Cloud Firestore는 데이터가 규모가 크고, 업데이트가 덜 할 때 사용
     - 쇼핑몰 앱을 만든 다면 적합
 
