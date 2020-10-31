@@ -268,6 +268,10 @@ dependencies {
     - https://firebase.google.com/docs/cloud-messaging/migrate-v1?hl=ko
 
 
+## 예제 소스 코드 전체
+-  https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/firebasetest/app/src/main/java/com/example/firebasetest/
+
+
 ## 실습
 - Cloud Messaging Test
 - 앱을 시작하면 FCM Token을 액티비티 화면에 표시
