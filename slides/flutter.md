@@ -809,6 +809,9 @@ void main() => runApp(ChangeNotifierProvider(
   ```
 
 
+## 전체 예제 코드
+- https://github.com/jyheo/android-kotlin-lecture/tree/master/examples/flutter_app
+
 ## Flutter에 대해 더 자세한 내용은
 - https://flutter.dev/docs
   - Platform-specific 코드 작성 방법
@@ -820,7 +823,13 @@ void main() => runApp(ChangeNotifierProvider(
 
 
   ## 실습 1 - 레이아웃 만들기
-  - 아래와 같은 UI를 만들고
+  - 강의 슬라이드 p.31 
+  - TextField 상태 저장 예제 따라하기
+  - 실행 동영상만 제출
 
-  ## 실습 2 - 네비게이션과 상태 관리
-  - 아래와 같은 페이지들을 만들고, 
+
+  ## 실습 2 - 리스트 만들기
+  - 아래 코드를 참고하여 리스트 만들기
+  - https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/flutter_app/lib/pages/list_page.dart
+  - 리스트의 항목은 자유롭게 정하면 됨
+  - 소스.zip과 실행 동영상 제출
