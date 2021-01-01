@@ -831,5 +831,6 @@ void main() => runApp(ChangeNotifierProvider(
   ## 실습 2 - 리스트 만들기
   - 아래 코드를 참고하여 리스트 만들기
   - https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/flutter_app/lib/pages/list_page.dart
+  - 항목을 누르면 선택한 항목을 다이얼로그로 보여주기
   - 리스트의 항목은 자유롭게 정하면 됨
   - 소스.zip과 실행 동영상 제출
