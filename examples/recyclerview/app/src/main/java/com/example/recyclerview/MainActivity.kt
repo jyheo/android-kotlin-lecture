@@ -3,7 +3,7 @@ package com.example.recyclerview
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.recyclerview.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val students = mutableListOf(Student(1, "john"), Student(2, "tom"))
@@ -12,13 +12,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recyclerview.setHasFixedSize(true)
-        recyclerview.layoutManager = LinearLayoutManager(this)
-        recyclerview.adapter = myAdapter
+        binding.recyclerview.setHasFixedSize(true)
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.adapter = myAdapter
 
-        button_add.setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             students.add(0, Student(stdID, "test $stdID"))
             stdID++
             myAdapter.notifyItemInserted(0)
