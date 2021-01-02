@@ -24,7 +24,7 @@ class MyAdapter(private val context: Context, private val students: MutableList<
 
         holder.binding.textView1.text = student.id.toString()
         holder.binding.textView2.text = student.name
-        holder.binding.textView2.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             AlertDialog.Builder(context).setMessage("You clicked ${student.name}.").show()
         }
         holder.binding.buttonRemove.setOnClickListener {
