@@ -6,3 +6,8 @@
 * https://marp.app/
 * ``` $ npm install -g @marp-team/marp-cli ```
 * ``` $ make ```
+
+## Contributor
+* 허준영(Junyoung Heo) @jyheo
+* 이관우(Kwanwoo Lee) @kwanu70
+* 이재문(Jae Moon Lee)
