@@ -27,6 +27,15 @@
     text-align: center;
   }
 
+  section.noslide p {
+    display: none
+  }
+
+  section header {
+    top:11px;
+    color:black;
+  }
+
 
   li li {
     font-size: 90%;
@@ -44,4 +53,8 @@
     vertical-align: text-top;
     border-style: solid;
     border-color: lightslategrey;
+  }
+
+  strong {
+    color: red;
   }
