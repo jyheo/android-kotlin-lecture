@@ -2,7 +2,11 @@
 MARP=marp
 OPT=--theme my-theme.css --allow-local-files
 OUTPUTDIR=output/
-TARGETS=room flutter
+
+FIREBASE=$(addprefix firebase-, auth database messaging storage)
+FLUTTER=flutter
+TARGETS=android-intro notification room $(FIREBASE) $(FLUTTER)
+
 TARGETS_PDF=$(addprefix $(OUTPUTDIR), $(addsuffix .pdf, $(TARGETS)))
 TARGETS_PPTX=$(addprefix $(OUTPUTDIR), $(addsuffix .pptx, $(TARGETS)))
 TARGETS_HTML=$(addprefix $(OUTPUTDIR), $(addsuffix .html, $(TARGETS)))
