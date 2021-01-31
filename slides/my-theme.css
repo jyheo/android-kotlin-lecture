@@ -36,7 +36,7 @@
     color:black;
   }
 
-  section.double ul {
+  section.double > ul {
     column-count: 2; 
   }
 
@@ -60,6 +60,10 @@
     vertical-align: text-top;
     border-style: solid;
     border-color: lightslategrey;
+  }
+
+  section.noborder img {
+    border-style: none;
   }
 
   strong {
