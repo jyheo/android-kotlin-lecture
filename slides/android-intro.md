@@ -82,7 +82,7 @@ backgroundImage: url('images/background.png')
 - ![w:900](https://source.android.com/images/android_framework_details.png)
   - 출처: https://source.android.com/images/android_framework_details.png
 
-<!-- _class: noslide -->
+<!-- _class: noslide nodots -->
 안드로이드는 [리눅스 커널](https://ko.wikipedia.org/wiki/리눅스_커널)을 기반으로 동작한다. 리눅스 커널위에 커널과 분리되는 사용자 레벨 HAL계층이 있어서 제조사가 원하는 하드웨어 제어 소프트웨어를 GPL 라이선스를 침해하지 않고 추가할 수 있다.
 
 안드로이드 런타임은 안드로이드 바이트 코드를 실행하는 가상 환경으로 Dalvik을 사용하다가 롤리팝(5.0) 이후부터 ART를 사용한다.
@@ -141,7 +141,7 @@ UI와 관련된 최신 기능의 대부분은 androidx를 통해 지원하기 �
 ---
 - ![w:1000](images/intro-android-studio.png)
 
-<!-- _class: noslide -->
+<!-- _class: noslide nodots -->
 프로젝트 파일이 생성되고, 생성된 프로젝트가 안드로이드 스튜디오에서 열린 화면이다.
 
 (1)번 은 안드로이드 스튜디오의 메뉴이고, (2)는 현재 프로젝트에 포함된 파일들을 여러 형태로 보여주는 사이드바이다. 안드로이드 스튜디오는 파일을 보여주는 부분(5)과 그 주위로 여러 개의 사이드바를 표시할 수 있다. 이 사이드바들을 통해 빌드 결과를 보거나 실행 중 발생하는 로그를 볼 수도 있다. 화면 아래의 (6)이 실행 중 로그를 보여주는 사이드바이다.
@@ -201,7 +201,7 @@ UI와 관련된 최신 기능의 대부분은 androidx를 통해 지원하기 �
 ---
 - ![w:1000](images/intro-debugging.png)
 
-<!-- _class: noslide -->
+<!-- _class: noslide nodots -->
 (1)은 디버거의 step into, step over 등의 한 스텝씩 실행하는 기능 툴바이고
 (2)는 현재 콜 스택 프레임을 나타내고
 (3)은 변수 값을 볼 수 있는 창으로 변수를 추가할 수 있다. 소스 코드 보는 창에서도 변수 옆에 값이 표시가 되어 쉽게 알 수 있다.

@@ -36,6 +36,13 @@
     color:black;
   }
 
+  section.double ul {
+    column-count: 2; 
+  }
+
+  section.nodots ul {
+    list-style-type: none;
+  }
 
   li li {
     font-size: 90%;
