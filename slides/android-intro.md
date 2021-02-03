@@ -33,7 +33,6 @@ backgroundImage: url('images/background.png')
   - 프로세서 파워의 향상
   - 배터리 효율의 향상
 
-<!-- _class: noslide -->
 모바일 디바이스의 성능이 계속 발전하여 데스크톱 수준으로 향상되어, 다양한 앱의 개발이 가능해졌다. 모바일 GPU/NPU도 계속 발전하여 스마트폰에서도 고품질의 3D게임이나 비전/딥러닝 추론이 가능한 수준이다.
 
 
@@ -58,6 +57,7 @@ backgroundImage: url('images/background.png')
   - AOSP를 기반으로한 다른 OS도 존재하지만 영향력은 크지 않음
   - https://source.android.com/index.html
 
+
 ## 안드로이드 버전 히스토리
 - 2008년 9월 Android 1.0 (API level 1)출시
 - **C**upcake, **D**onut, **E**clair, **F**royo, **G**ingerbread, **H**oneycomb(3.0)
@@ -70,8 +70,6 @@ backgroundImage: url('images/background.png')
 - 2019년 9월 **Q** 10.0 (API level 29)
 - 2020년 9월 **R** 11.0 (API level 30)
 
-
-<!-- _class: noslide -->
 안드로이드의 코드명은 알파벳 순으로 A부터 시작하여 현재 P인 Pie까지 출시되었다.
 안드로이드는 오픈 소스 프로젝트이지만, 일반 삼성이나 LG와 같은 스마트폰 제조사에서는 안드로이드 오픈 소스를 기반으로 구글이 릴리즈하는 것을 사용한다.
 
@@ -79,10 +77,10 @@ backgroundImage: url('images/background.png')
 
 
 ## 안드로이드 소프트웨어 스택
+<!-- _class: nodots -->
 - ![w:900](https://source.android.com/images/android_framework_details.png)
   - 출처: https://source.android.com/images/android_framework_details.png
 
-<!-- _class: noslide nodots -->
 안드로이드는 [리눅스 커널](https://ko.wikipedia.org/wiki/리눅스_커널)을 기반으로 동작한다. 리눅스 커널위에 커널과 분리되는 사용자 레벨 HAL계층이 있어서 제조사가 원하는 하드웨어 제어 소프트웨어를 GPL 라이선스를 침해하지 않고 추가할 수 있다.
 
 안드로이드 런타임은 안드로이드 바이트 코드를 실행하는 가상 환경으로 Dalvik을 사용하다가 롤리팝(5.0) 이후부터 ART를 사용한다.
@@ -94,20 +92,16 @@ Android Framework는 자바로 작성되어 안드로이드 런타임에 의해 
 응용 프로그램, 안드로이드와 함께 릴리즈 되기도하며 구글 플레이 스토어나 기타 앱 마켓(국내는 원스토어, 삼성 마켓)을 통해 추가로 앱을 설치할 수 있다. 구글은 구글 플레이와 관련된 서브 시스템들을 제조사가 아닌 구글 플레이 스토어를 통해 업데이트하도록 하여 새로운 기능(구글 위치 서비스, 구글 클라우드 메시지 등)을 빠르게 업데이트할 수 있도록 하였다.
 
 
-
 ## 개발환경 설치
 - Android Studio를 다운로드 하여 설치
   - https://developer.android.com/studio/
   ![w:800](images/intro-studio.png)
 
-
-<!-- _class: noslide -->
 예전에는 JDK를 별도로 설치하였으나, 이제는 Android Studio 설치 파일에 OpenJDK가 포함되어 있어서 별도로 설치할 필요가 없다.
 
 안드로이드 앱은 일반적으로 코틀린이나 자바 언어를 이용하여 개발한다. 코틀린을 이용하면 훨씬 프로그래밍이 간편해지기 때문에 자바보다 코틀린이 더 많이 사용되는 추세이다.
 
 성능이 요구되는 응용이나 라이브러리 개발을 위해 Native로 만들 수 있는 NDK도 제공한다. 이때는 C/C++언어로 프로그래밍한다.
-
 
 
 ## 안드로이드 스튜디오를 이용하여 앱 만들기 위한 프로젝트 생성
@@ -118,18 +112,15 @@ Android Framework는 자바로 작성되어 안드로이드 런타임에 의해 
     - Phone and Tablet 선택
     - Empty Activity 선택 ![w:400](images/intro-project-template.png)
 
-<!-- _class: noslide -->
 만들려는 앱의 대상 디바이스 종류를 선택하고, 그 디바이스에 해당하는 앱 템플릿을 선택한다.
 
 ---
-
 - Configure Your Project
     - Name: My Application
     - Save location: 적당한 위치를 선택
     - Minimum SDK: API 23 Android 6.0 (Marshmallow)
     - Finish ![w:600](images/intro-configure-project.png)
 
-<!-- _class: noslide -->
 Name: 만들려는 앱 이름
 Package name: 앱의 패키지 이름
 Save location: 프로젝트가 저장될 폴더
@@ -138,10 +129,10 @@ Minimum SDK: 만들려는 앱이 실행 가능한 안드로이드의 최소 버�
 
 UI와 관련된 최신 기능의 대부분은 androidx를 통해 지원하기 때문에 너무 낮은 API만 아니면 괜찮다.
 
----
+--- 
+<!-- _class: nodots -->
 - ![w:1000](images/intro-android-studio.png)
 
-<!-- _class: noslide nodots -->
 프로젝트 파일이 생성되고, 생성된 프로젝트가 안드로이드 스튜디오에서 열린 화면이다.
 
 (1)번 은 안드로이드 스튜디오의 메뉴이고, (2)는 현재 프로젝트에 포함된 파일들을 여러 형태로 보여주는 사이드바이다. 안드로이드 스튜디오는 파일을 보여주는 부분(5)과 그 주위로 여러 개의 사이드바를 표시할 수 있다. 이 사이드바들을 통해 빌드 결과를 보거나 실행 중 발생하는 로그를 볼 수도 있다. 화면 아래의 (6)이 실행 중 로그를 보여주는 사이드바이다.
@@ -188,7 +179,6 @@ UI와 관련된 최신 기능의 대부분은 androidx를 통해 지원하기 �
   - MainActivity.kt의 9번째 라인의 인자를 1로 바꾸고 실행(고의로 예외 발생 시킴)
   ![](images/intro-exception.png)
 
-<!-- _class: noslide -->
 예외 메시지가 다른 로그와 섞여서 찾기 어려운 경우가 있는데, 디버그 모드로 실행해보면 쉽게 찾을 수 있다.
 
 ---
@@ -199,9 +189,9 @@ UI와 관련된 최신 기능의 대부분은 androidx를 통해 지원하기 �
   - 메뉴의 Run > Debug 'app'
 
 ---
+<!-- _class: nodots -->
 - ![w:1000](images/intro-debugging.png)
 
-<!-- _class: noslide nodots -->
 (1)은 디버거의 step into, step over 등의 한 스텝씩 실행하는 기능 툴바이고
 (2)는 현재 콜 스택 프레임을 나타내고
 (3)은 변수 값을 볼 수 있는 창으로 변수를 추가할 수 있다. 소스 코드 보는 창에서도 변수 옆에 값이 표시가 되어 쉽게 알 수 있다.

@@ -27,8 +27,12 @@
     text-align: center;
   }
 
-  section.noslide p {
+  section p {
     display: none
+  }
+
+  section.showp p {
+    display: inline
   }
 
   section header {
