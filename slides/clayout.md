@@ -28,7 +28,6 @@ backgroundImage: url('images/background.png')
   - 위젯 선택했을 때 위,아래,왼쪽,오른쪽 테두리에 보이는 원 모양이 앵커    
   ![w:300 h:200](images/clayout/anchor.png) ![w:300 h:200](images/clayout/anchor2.png) ![w:300](images/clayout/constraints.png)
 
-<!-- _class: noslide -->
 왼쪽은 constraint가 설정되지 않은 상태이고, 가운데는 parent와 상,하,좌,우 모두 연결된 constraint를 보여주는 것
 
 
@@ -62,7 +61,7 @@ backgroundImage: url('images/background.png')
       android:text="Button"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.3"
+  →   app:layout_constraintHorizontal_bias="0.3"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
   ```
@@ -91,7 +90,7 @@ backgroundImage: url('images/background.png')
       android:text="Button2"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/button1"
+  →   app:layout_constraintStart_toEndOf="@+id/button1"
       app:layout_constraintTop_toTopOf="parent" />
   ```
 
