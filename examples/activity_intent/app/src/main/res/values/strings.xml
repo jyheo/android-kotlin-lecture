@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">activity_intent</string>
+    <string name="start_third_activity_with_extra_data">start third activity with extra data</string>
+    <string name="start_dial_activity">Start Dial Activity</string>
+    <string name="start_second_activity">Start Second Activity</string>
+    <string name="message_bundled_in_intent">Message bundled in Intent</string>
+    <string name="finish">Finish</string>
+</resources>
