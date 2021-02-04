@@ -1,3 +1,9 @@
+
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+
 # android-kotlin-lecture
 안드로이드 앱 개발 기초 강의 자료
 
@@ -38,3 +44,4 @@
 - <img src="https://github.com/jyheo.png" width=16 height=16/>허준영(Junyoung Heo) [@jyheo](https://github.com/jyheo)
 - <img src="https://github.com/kwanu70.png" width=16 height=16/>이관우(Kwanwoo Lee) [@kwanu70](https://github.com/kwanu70)
 - 이재문(Jae Moon Lee)
+
