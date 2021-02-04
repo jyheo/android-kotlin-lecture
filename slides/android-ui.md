@@ -16,7 +16,9 @@ backgroundImage: url('images/background.png')
 
 ## 학습목표
 - 위젯과 레이아웃의 의미를 설명할 수 있다.
-- ConstraintLayout이나 LinearLayout을 사용하여 UI를 구성할 수 있다.
+- LinearLayout을 사용하여 UI를 구성할 수 있다.
+- Margin, Padding, Gravity 속성을 이해하고 사용할 수 있다.
+- 이벤트 리스너를 이해하고 클릭 이벤트 처리를 할 수 있다.
 
 
 ## 안드로이드 UI - 화면 크기를 고려한 디자인
@@ -35,21 +37,46 @@ backgroundImage: url('images/background.png')
 
 ## UI요소 - 위젯과 레이아웃
 - 위젯
-  - 정보를 출력, 입력하기 위한 UI 구성 요소
-  - TextView, Button, EditText, Checkbox 등과 같은 것들이 있음
+  - 정보를 출력, 입력 받기 위한 UI 구성 요소
+  - TextView, Button, EditText, Checkbox 등
   - 주의: 안드로이드의 앱 위젯(App Widget)과는 다른 것임
 - 레이아웃
-  - 위젯이나 다른 하위 레이아웃을 어떻게 배치할지 결정함
-  - xml파일로 작성하고, 소스 코드에서 로드하여 사용함
-  - 위젯을 특정 방향으로 일렬로 배치하게 하거나(LinearLayout)
-  - 다른 위젯을 기준으로 위치를 정하기도 함(ConstraintLayout)
+  - 사용자 인터페이스에 대한 시각적 형태를 계층적 구조로 정의
+    - 레이아웃(부모)과 포함되는 UI요소들(자식)을 부모-자식 관계로 나타내는 계층적 구조
+    - 자식 UI요소 중에 레이아웃이 있을 수 있음(즉, 레이아웃 내에 다른 레이아웃이 중첩하여 존재할 수 있음)
+  - XML 파일로 작성하고, 소스 코드에서 로드하여 사용함
+  - LinearLayout, ConstraintLayout, FrameLayout, CoordinatorLayout, MotionLayout 등
 
 ![bg right:20% 100%](images/ui/androidui.png)
 
 앱 위젯(App Widget)은 안드로이드에서 홈화면에 배치하여 앱을 시작하지 않고도 정보를 빠르게 보거나 해당 앱으로 이동하게 해주는 것을 말한다. 보통 시계나 날씨, 검색 창 등을 앱 위젯으로 많이 사용한다.
 
 
-## 간단한 레이아웃과 위젯 예
+## UI요소 - View 클래스
+- UI요소(위젯, 레이아웃)들은 View를 상속하여 구현
+  - 화면에 표시 가능한 사각형 영역
+  - 각각의 뷰는 알아서 자신의 내용을 그리고, 이벤트(키보드, 마우스) 처리를 해결
+- ViewGroup는 View이지만 다른 View를 포함할 수 있는 View
+  - 레이아웃은 ViewGroup에 속함
+- View의 속성이 곧 UI요소의 속성이 됨
+  - android:visibility: 보이기 속성(Visible, Invisible, Gone)
+  - android:layout_height, android:layout_width : 크기 속성
+  - android:layout_margin: 외부 여백
+  - android:layout_gravity: 위젯 위치 정렬
+  - android:padding: 내부 여백
+  - android:gravity: 내부 요소 정렬
+
+android:visibility에서 Invisible은 해당 View를 안보이게 하고, Gone은 해당 View 자체를 레이아웃에서 제외한다.
+android:layout_margin은 View의 외부 여백 크기를 지정한다. 즉 다른 인접한 View와의 간격을 조절할 수 있다.
+android:layout_gravity는 View의 부모 View내에서의 위치를 지정한다. 부모 View에서 해당 View를 특정 위치로 정렬한다.
+android:padding은 View 내부의 요소(글씨나 이미지, View 등)와 View 테두리의 여백 크기를 지정한다.
+android:gravity는 View 내부의 요소(글씨나 이미지, View 등)를 특정 위치로 정렬한다.
+
+기타 다른 View 속성도 많이 있다.
+android:background는 배경색을 지정한다.
+
+
+## UI요소 - 간단한 레이아웃과 위젯 예
 - Android Studio에서 Empty Activity를 만들 때 자동으로 생성되는 레이아웃
   - app/src/main/res/layout/activity_main.xml
   ```xml
@@ -96,77 +123,56 @@ tools 속성들은 실제로 레이아웃이 inflate(앱에서 xml을 읽어서 
 
 MainActivity의 onCreate()는 일단은 main()함수 같이 프로그램의 시작 지점이라고 생각해두자.
 
-## UI 요소 크기
-- UI 요소(레이아웃과 위젯)의 가로,세로 크기를 지정할 수 있음
-- 가로 크기: layout_width
-- 새로 크기: layout_height
-- 크기 값으로 사용 가능한 것은
-  - match_parent: 부모 UI요소 크기와 일치시킴
-  - wrap_content: UI요소 내부의 내용 크기에 맞게 크기를 조절함
-  - 특정 숫자 값: 예를 들어 300dp, 100px, 크기를 값에 따라 고정함
-    - dp 단위 사용을 권장함
 
-px는 픽셀을 나타내는 단위이다. 디바이스의 물리적 크기와 dpi(dots per inch)에 따라 실제로 보이는 크기가 다를 수 있다.
-
-dp라는 단위는 dip라고도 하며 device independent pixel을 의미한다. 특정 디바이스의 해상도(resolution)에 상관 없이 UI요소의 크기를 나타내기 위한 것이다. 기준이 되는 디바이스는 160 dpi이다. 즉, px = dp * (dpi / 160)로 실제 디바이스 픽셀 수가 결정된다. 예를 들어 160 dpi 디바이스에서 320dp라고 하면 320px가 되는 것이고, 320 dpi 디바이스에서 320dp라고 하면 실제로 640px가 된다. dp를 사용하면, 디바이스의 물리적 크기가 비슷하다면 실제로 보이는 요소의 크기도 비슷하게 된다.
-
-참고로, 텍스트 크기를 나타낼 때는 dp보다 sp를 권장한다. sp는 시스템의 글꼴 크기에 따라 크기가 변한다.
+## 위젯
+  - TextView, EditText
+  - Button
+  - RadioButton, CheckBox, Switch
+  - ImageView
+  - WebView
+  - ScrollView, NestedScrollView, ViewPager
+  - Spinner, RecyclerView
 
 
-## UI 요소 크기 - Example
-
-```xml
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
-→       android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Width = Match Parent"/>
-    <Button
-→       android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Width = wrap content"/>
-    <Button
-→       android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Width = 100dp"/>
-
-</LinearLayout>
-```
-
-![bg right:30% 90%](images/ui/size.png)
-
-여기에서 사용한 레이아웃은 LinearLayout으로 하위 UI요소들을 가로 또는 세로 방향으로 일렬로 배치하는 레이아웃이다.
-
-https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/app/src/main/res/layout/ui_component_size.xml
+## 위젯 - TextView와 EditText
+- 기본적인 텍스트 표시/입력 뷰
+- TextView – 사용자가 수정할 수 없으나 코드에서 텍스트를 변경할 수 있음
+- EditText – 사용자가 입력 가능함
+  ![](images/ui/edittext.png)
 
 
-## 레이아웃(Layout)
-- 레이아웃은 사용자 인터페이스에 대한 시각적 형태를 계층적 구조로 정의
-  - 레이아웃(부모)과 포함되는 UI요소들(자식)을 부모-자식 관계로 나타내는 계층적 구조
-  - 자식 UI요소 중에 레이아웃이 있을 수 있음(즉, 레이아웃 내에 다른 레이아웃이 중첩하여 존재할 수 있음)
-- 레이아웃 내에 UI요소 들의 배치 방법, 크기 등을 결정  
-- 레이아웃 종류
-  - LinearLayout
-  - ConstraintLayout
-  - FrameLayout
-  - CoordinatorLayout
-
-이 외에도 여러가지 레이아웃이 있으나 대표적으로 많이 사용되는 것만 나열하였다.
+## 위젯 - Button
+<!-- _class: noborder -->
+- 일반적으로 많이 사용되는 푸시 버튼
+- 버튼내에 텍스트, 아이콘을 표시할 수 있음
+  - 버튼 전체를 이미지로 그리기 위해서는 ImageButton 사용
+- 레이아웃 XML에 버튼 속성으로 onClick에 on-click 이벤트 핸들러를 지정할 수 있음
+  ![](images/ui/button.png)
 
 
-## LinearLayout
+## 위젯 - CompoundButton
+<!-- _class: noborder -->
+- 두 개의 상태를 갖는 버튼
+  - 체크/미체크, 온/오프
+  - CompoundButton | 모양  
+    -------------|------------------------------------
+    ToggleButton | ![h:30px](images/ui/togglebutton.png)
+    Switch       | ![](images/ui/switchbutton.png)
+    CheckBox     | ![h:100px](images/ui/checkbox.png)
+    RadioButtons | ![h:50px](images/ui/radiobutton.png)
+
+
+## 레이아웃 - LinearLayout
 - LinearLayout(선형 레이아웃)
 - 자식 UI요소들을 가로(horizontal) 방향 또는 세로(vertical) 방향으로 일렬로 배치하는 레이아웃
 - 단순한 UI요소 배치에는 쉽게 사용할 수 있으나
 - 복잡한 배치는 쉽지 않고, 레이아웃을 많이 중첩하게 되어 성능이 떨어짐
+- 관련 속성
+  - android:orientation - 배치 방향을 결정, vertical 또는 horizontal
+  - android:layout_weight - 남는 공간을 자식 요소들에게 나누어줄 가중치 
 
 
-## LinearLayout - Example
+## 레이아웃 - LinearLayout - Example
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -237,74 +243,69 @@ android:background는 해당 UI요소의 배경색을 지정한다.
 https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/app/src/main/res/layout/linear_layout.xml
 
 
-## View
-- 모든 UI요소들은 View를 상속
-  - 화면에 표시 가능한 사각형 영역
-  - 각각의 뷰는 알아서 자신의 내용을 그리고, 이벤트(키보드, 마우스) 처리를 해결
-- View의 속성을 UI요소들이 상속 받음
-  - android:visibility
-    - Visible
-    - Gone – 자리 차지도 안함
-    - Invisible – 자리는 있지만 보이지는 않음
-  - android:layout_height, android:layout_width
-  - android:background
-
-기타 다른 View 속성도 많이 있음
-
-
-## View/ViewGroup으로 UI 구성
-- ViewGroup는 View이지만 다른 View를 포함할 수 있는 View
-  - LinearLayout과 같은 레이아웃이 대표적인 ViewGroup
-- View로 구성된 트리로 UI가 구성됨, 앞의 LinearLayout Example의 UI 트리
+---
+- 앞의 LinearLayout Example의 UI 트리
   ![h:350](images/ui/viewgroup.png)
 
 <!-- _class: noborder -->
 
-## View/ViewGroup(UI요소) 예
-  - TextView, EditText
-  - Button
-  - RadioButton, CheckBox, Switch
-  - ImageView
-  - WebView
-  - ScrollView, NestedScrollView, ViewPager
-  - Spinner, RecyclerView
+
+## UI 요소 크기
+- UI 요소(레이아웃과 위젯)의 가로,세로 크기를 지정할 수 있음
+- 가로 크기: layout_width
+- 새로 크기: layout_height
+- 크기 값으로 사용 가능한 것은
+  - match_parent: 부모 UI요소 크기와 일치시킴
+  - wrap_content: UI요소 내부의 내용 크기에 맞게 크기를 조절함
+  - 특정 숫자 값: 예를 들어 300dp, 100px, 크기를 값에 따라 고정함
+    - dp 단위 사용을 권장함
+
+px는 픽셀을 나타내는 단위이다. 디바이스의 물리적 크기와 dpi(dots per inch)에 따라 실제로 보이는 크기가 다를 수 있다.
+
+dp라는 단위는 dip라고도 하며 device independent pixel을 의미한다. 특정 디바이스의 해상도(resolution)에 상관 없이 UI요소의 크기를 나타내기 위한 것이다. 기준이 되는 디바이스는 160 dpi이다. 즉, px = dp * (dpi / 160)로 실제 디바이스 픽셀 수가 결정된다. 예를 들어 160 dpi 디바이스에서 320dp라고 하면 320px가 되는 것이고, 320 dpi 디바이스에서 320dp라고 하면 실제로 640px가 된다. dp를 사용하면, 디바이스의 물리적 크기가 비슷하다면 실제로 보이는 요소의 크기도 비슷하게 된다.
+
+참고로, 텍스트 크기를 나타낼 때는 dp보다 sp를 권장한다. sp는 시스템의 글꼴 크기에 따라 크기가 변한다.
 
 
-## TextView와 EditText
-- 기본적인 텍스트 표시/입력 뷰
-- TextView – 사용자가 수정할 수 없으나 코드에서 텍스트를 변경할 수 있음
-- EditText – 사용자가 입력 가능함
-  ![](images/ui/edittext.png)
+## UI 요소 크기 - Example
+
+```xml
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+→       android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Width = Match Parent"/>
+    <Button
+→       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Width = wrap content"/>
+    <Button
+→       android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Width = 100dp"/>
+
+</LinearLayout>
+```
+
+![bg right:30% 90%](images/ui/size.png)
+
+여기에서 사용한 레이아웃은 LinearLayout으로 하위 UI요소들을 가로 또는 세로 방향으로 일렬로 배치하는 레이아웃이다.
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/app/src/main/res/layout/ui_component_size.xml
 
 
-## Button
-<!-- _class: noborder -->
-- 일반적으로 많이 사용되는 푸시 버튼
-- 버튼내에 텍스트, 아이콘을 표시할 수 있음
-  - 버튼 전체를 이미지로 그리기 위해서는 ImageButton 사용
-- 레이아웃 XML에 버튼 속성으로 onClick에 on-click 이벤트 핸들러를 지정할 수 있음
-  ![](images/ui/button.png)
-
-
-## CompoundButton
-<!-- _class: noborder -->
-- 두 개의 상태를 갖는 버튼
-  - 체크/미체크, 온/오프
-  - CompoundButton | 모양  
-    -------------|------------------------------------
-    ToggleButton | ![h:30px](images/ui/togglebutton.png)
-    Switch       | ![](images/ui/switchbutton.png)
-    CheckBox     | ![h:100px](images/ui/checkbox.png)
-    RadioButtons | ![h:50px](images/ui/radiobutton.png)
-
-
-## Margin과 Padding
-- Margin: View의 바깥 여백
+## Layout_Margin과 Padding
+- Layout_Margin: View의 바깥 여백
 - Padding: View의 내부 여백
   ![](images/ui/marginpadding.png)
 
 
-## Margin과 Padding - Example
+## Layout_Margin과 Padding - Example
 
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -341,8 +342,8 @@ Button2의 경우 marginStart만 20dp를 줬기 때문에 왼쪽 부분에만 �
 https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/app/src/main/res/layout/layout_margin_padding.xml
 
 
-## Gravity
-- 부모 뷰 안에 포함되는 자식 뷰의 위치를 결정하는 속성
+## Layout_Gravity
+- 부모 뷰 내에서 해당 뷰의 정렬 위치를 지정하는 속성
 - LinearLayout/FrameLayout의 자식 뷰에서 layout_gravity 속성으로 흔히 사용
 - 가능한 값들들
   - BOTTOM – 부모 뷰에서 아래쪽에 위치시킴
@@ -353,6 +354,9 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/ap
   - LEFT – 부모 뷰에서 왼쪽에 위치시킴
   - RIGHT – 부모 뷰에서 오른쪽에 위치시킴
   - TOP – 부모 뷰에서 위쪽에 위치시킴
+
+layout_gravity는 개별 자식 뷰의 속성으로 지정하여, 각 자식 뷰의 부모 뷰 내에서의 위치를 결정하는 것이고,
+gravity는 부모 뷰의 속성으로 지정하여, 자식 뷰 전체에 대해 위치를 결정하는 것이다.
 
 ---
 ```xml
@@ -449,3 +453,4 @@ findViewById()가 리턴한 Button 객체의 setOnClickListener() 메소드를 �
 https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/app/src/main/res/layout/linear_layout.xml#L17
 
 https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/app/src/main/java/com/example/basic_ui/MainActivity.kt
+
