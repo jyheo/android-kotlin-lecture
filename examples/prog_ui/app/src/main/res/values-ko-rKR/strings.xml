@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">prog_ui</string>
+    <string name="long_text">안드로이드 스튜디오는 모든 종류 안드로이드 디바이스 앱을 빠르게 만들 수 있게 해준다.</string>
+    <string name="bold_italic">굵고 기울임 체</string>
+    <string name="text_align">텍스트 중앙 정렬</string>
+    <string name="normal_edit_text">일반 EditText</string>
+    <string name="password_edit_text">패스워드 EditText</string>
+    <string name="email_edit_text">이메일 EditText</string>
+    <string name="action">동작</string>
+    <string name="dog">개</string>
+    <string name="cat">고양이</string>
+    <string name="bench_under_tree">나무 아래 벤치</string>
+    <string name="imageview_in_scrollview">ImageView in ScrollView</string>
+</resources>

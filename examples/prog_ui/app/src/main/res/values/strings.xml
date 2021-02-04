@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">prog_ui</string>
+    <string name="long_text">Android Studio provides the fastest tools for building apps on every type of Android device</string>
+    <string name="bold_italic">bold and italic</string>
+    <string name="text_align">Text Center</string>
+    <string name="normal_edit_text">Normal EditText</string>
+    <string name="password_edit_text">Password EditText</string>
+    <string name="email_edit_text">Email EditText</string>
+    <string name="action">Action</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="bench_under_tree">Bench under Tree</string>
+    <string name="imageview_in_scrollview">ImageView in ScrollView</string>
+</resources>
