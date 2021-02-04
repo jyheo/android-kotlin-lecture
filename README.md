@@ -8,7 +8,7 @@
 - android-ui.md 레이아웃
 - clayout.md ConstraintLayout
 - 위젯, 리소스 문자열
-- 액티비티, 인텐트
+- 액티비티, 인텐트, viewmodel
 - 프래그먼트, 네비게이션, ViewPager
 - 메뉴, 다이얼로그, Snackbar
 - 어댑터뷰, 스피너, 리싸이클러뷰
