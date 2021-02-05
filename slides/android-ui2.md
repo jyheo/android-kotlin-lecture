@@ -17,6 +17,7 @@ backgroundImage: url('images/background.png')
 ## 학습목표
 - 레이아웃 XML에서 TextView와 EditText의 외형과 관련된 속성을 이해하고 사용할 수 있다.
 - 리소스 문자열을 사용하여 다국어 레이아웃을 만들 수 있다.
+- 스타일과 테마를 이해하고 사용할 수 있다.
 - ImageView 위젯을 사용하여 이미지를 표시할 수 있다.
 - ScrollView를 사용하여 크기가 큰 위젯이 스크롤되도록 만들 수 있다.
 - ViewBinding을 이용하여 위젯 객체를 접근할 수 있다.
@@ -125,8 +126,118 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app
 ![](images/ui/text-attr.png) ![](images/ui/text-attr-ko.png)
 
 
+## 스타일과 테마(Style & Theme)
+- **스타일**은 위젯의 외형과 관련된 속성(색깔, 크기 등)을 하나의 세트로 만들어 둔 것
+- 미리 만들어 둔 스타일을 위젯의 스타일로 지정하면 해당 속성이 모두 적용됨
+- 스타일 파일 src\main\res\values\styles.xml 에서 mytextview 라는 스타일을 정의
+    ```xml
+    <resources>
+        <style name="mytextview">
+            <item name="android:textSize">24sp</item>
+            <item name="android:textColor">#000000</item>
+        </style>
+    </resources>
+    ```
+- 위젯 정의 할 때 style 속성으로 지정
+    ```xml
+    <TextView
+        android:layout_width="match_parent"        android:layout_height="wrap_content"
+    →   style="@style/mytextview"
+        android:text="@string/long_text"/>
+    ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/values/styles.xml
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/activity_main.xml#L14
+
+
+---
+- **테마**는 앱 전체에 적용되는 스타일
+- 스타일과 같은 형식으로 정의, 위젯의 속성 뿐 아니라 테마 색을 지정할 수 있음
+- 보통 테마를 위한 스타일 파일은 src\main\res\values\themes.xml
+    ```xml
+    <resources xmlns:tools="http://schemas.android.com/tools">
+        <!-- Base application theme. -->
+    →   <style name="Theme.Prog_ui" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+            <!-- Primary brand color. -->
+            <item name="colorPrimary">@color/purple_500</item>
+            <item name="colorPrimaryVariant">@color/purple_700</item>
+            <item name="colorOnPrimary">@color/white</item>
+            <!-- Secondary brand color. -->
+            <item name="colorSecondary">@color/teal_200</item>
+            <item name="colorSecondaryVariant">@color/teal_700</item>
+            <item name="colorOnSecondary">@color/black</item>
+            <!-- Status bar color. -->
+            <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+            <!-- Customize your theme here. 여기에 일반 위젯 속성을 추가할 수도 있음-->
+        </style>
+    </resources>
+    ```
+    - @color는 src\main\res\values\colors.xml 에 보통 color 리소스로 정의됨
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/values/themes.xml
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/values/colors.xml
+
+스타일 이름은 Theme.Prog_ui 이고 Theme.MaterialComponents.DayNight.DarkActionBar의 속성을 모두 상속한다. 그리고 몇 가지 속성들(여기에서는 색과 관련된 속성)을 다시 정의한 것이다.
+
+
+---
+- 테마는 AndroidManifest.xml의 application 태그의 android:theme 속성으로 지정함
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.example.prog_ui">
+
+        <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+    →       android:theme="@style/Theme.Prog_ui">
+            <activity android:name=".MainActivity">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>
+        </application>
+    </manifest>
+    ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/AndroidManifest.xml#L11
+
+
 ## ImageView
 - 이미지를 표시하는 위젯
+- ImageView에서 보여줄 이미지는 app:srcCompat 속성으로 지정
+- 이미지는 src\main\res\drawable\ 밑에 복사 함
+    - src\main\res\drawable\bench_under_tree.jpg 이미지 파일이 있다면 다음과 같이 지정
+        ```xml
+        <ImageView
+            android:layout_width="@dimen/imgsize"
+            android:layout_height="@dimen/imgsize"
+            android:layout_marginEnd="5dp"
+            android:background="#C6B0B0"
+        →   app:srcCompat="@drawable/bench_under_tree" />
+        ```
+        - 여기에서 이미지의 가로, 세로 크기를 @dimen/imgsize 라고 했는데, 이는 리소스로 정의한 것으로, src\main\res\values\dimens.xml 에 아래와 같이 정의 하여 사용한 것임
+            ```xml
+            <resources>
+                <dimen name="imgsize">115dp</dimen>
+            </resources>
+            ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/image_scale_type.xml#L13-L18
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/values/dimens.xml
+
+예전에는 android:src를 사용했으나, Jetpack을 통해 벡터 이미지 지원이 가능하도록 하기 위해 app:srcCompat 속성으로 지정하는 것을 권장한다.
+
+Jetpack 라이브러리는 안드로이드 버전에 따라 추가되는 새로운 기능 일부를 이전 버전에서도 사용 가능하도록 라이브러리 형태로 제공하는 것이다. 네임 스페이스가 androidx로 시작하기 때문에 androidx로 부르기도 한다. Jetpack 이전에는 Support Library라는 이름으로 불렸었다.
+
+---
 - 이미지 크기가 ImageView 보다 크거나 작을 경우 scaleType을 지정하여 표시되는 이미지 크기 변경
 - ScaleType 종류
     - center, centerCrop, centerInside, fitCenter, fitEnd, fitStart, fitXY, matrix
@@ -136,29 +247,6 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app
         - 왼쪽 위 부터 순서대로 디폴트(fitCenter), center, centerCrop, centerInside, fitCenter, fitEnd, fitStart, fitXY, matrix 순서로 scaleType을 지정
 
 ![bg right:35% h:90%](images/ui/scaletype.png)
-
----
-- ImageView에서 보여줄 이미지는 app:srcCompat 속성으로 지정
-- 이미지는 src\main\res\drawable\ 밑에 복사 함
-    - 만일 src\main\res\drawable\bench_under_tree.jpg 이미지 파일이 있다면 다음과 같이 지정한다.
-        ```xml
-        <ImageView
-            android:layout_width="@dimen/imgsize"
-            android:layout_height="@dimen/imgsize"
-            android:layout_marginEnd="5dp"
-            android:background="#C6B0B0"
-        →   app:srcCompat="@drawable/bench_under_tree" />
-        ```
-        - 여기에서 이미지의 가로, 세로 크기를 @dimen/imgsize 라고 했는데, 이는 src\main\res\values\dimens.xml 에 아래와 같이 정의 하여 사용한 것임
-            ```xml
-            <resources>
-                <dimen name="imgsize">115dp</dimen>
-            </resources>
-            ```
-
-예전에는 android:src를 사용했으나, Jetpack을 통해 벡터 이미지 지원이 가능하도록 하기 위해 app:srcCompat 속성으로 지정하는 것을 권장한다.
-
-Jetpack 라이브러리는 안드로이드 버전에 따라 추가되는 새로운 기능 일부를 이전 버전에서도 사용 가능하도록 라이브러리 형태로 제공하는 것이다. 네임 스페이스가 androidx로 시작하기 때문에 androidx로 부르기도 한다. Jetpack 이전에는 Support Library라는 이름으로 불렸었다.
 
 ---
 ```xml
@@ -199,10 +287,29 @@ Jetpack 라이브러리는 안드로이드 버전에 따라 추가되는 새로�
 ```
 ![bg right:35% h:90%](images/ui/scaletype.png)
 
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/image_scale_type.xml
+
+
 ## ScrollView
 - 자식 뷰가 클 경우 스크롤 가능하도록 만듬
 - 세로 스크롤 동작이 기본
 - 가로 스크롤을 하려면 HorizontalScrollView를 사용
+    ```xml
+    →<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/bench_under_tree"
+            android:scaleType="center"
+            app:srcCompat="@drawable/bench_under_tree" />
+    →</ScrollView>
+    ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/activity_main.xml#L88-L99
 
 
 ## ViewBinding
@@ -212,5 +319,61 @@ Jetpack 라이브러리는 안드로이드 버전에 따라 추가되는 새로�
 
 
 ## RadioButton
+- RadioGroup의 자식 View로 RadioButton을 사용하면 자식 RadioButton들 중 하나만 선택이 됨
+    ```xml
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioDog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dog" />
+
+        <RadioButton
+            android:id="@+id/radioCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cat" />
+    </RadioGroup>
+    ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/activity_main.xml#L57-L73
+
 
 ## Button
+- 버튼
+    ```xml
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/action" />
+    ```
+
+## 버튼 클릭으로 위젯 내용 변경
+- 코드
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.imageView.scaleType = ImageView.ScaleType.CENTER
+
+        binding.button.setOnClickListener {
+            // hide softkeyboard
+            (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(it.windowToken, 0)
+
+            val pet = "Dog:${binding.radioDog.isChecked}, Cat:${binding.radioCat.isChecked}"
+            binding.textView2.text = binding.editTextTextPersonName.text
+            Snackbar.make(it, pet, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+}
+```
