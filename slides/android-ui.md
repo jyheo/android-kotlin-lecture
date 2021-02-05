@@ -138,7 +138,7 @@ MainActivity의 onCreate()는 일단은 main()함수 같이 프로그램의 시�
 - 기본적인 텍스트 표시/입력 뷰
 - TextView – 사용자가 수정할 수 없으나 코드에서 텍스트를 변경할 수 있음
 - EditText – 사용자가 입력 가능함
-  ![](images/ui/edittext.png)
+  - ![](images/ui/edittext.png)
 
 
 ## 위젯 - Button
@@ -147,7 +147,7 @@ MainActivity의 onCreate()는 일단은 main()함수 같이 프로그램의 시�
 - 버튼내에 텍스트, 아이콘을 표시할 수 있음
   - 버튼 전체를 이미지로 그리기 위해서는 ImageButton 사용
 - 레이아웃 XML에 버튼 속성으로 onClick에 on-click 이벤트 핸들러를 지정할 수 있음
-  ![](images/ui/button.png)
+  - ![](images/ui/button.png)
 
 
 ## 위젯 - CompoundButton
@@ -245,7 +245,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/ap
 
 ---
 - 앞의 LinearLayout Example의 UI 트리
-  ![h:350](images/ui/viewgroup.png)
+  - ![h:350](images/ui/viewgroup.png)
 
 <!-- _class: noborder -->
 
@@ -302,7 +302,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/ap
 ## Layout_Margin과 Padding
 - Layout_Margin: View의 바깥 여백
 - Padding: View의 내부 여백
-  ![](images/ui/marginpadding.png)
+  - ![](images/ui/marginpadding.png)
 
 
 ## Layout_Margin과 Padding - Example
@@ -403,7 +403,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/ap
 - 사용자가 뷰를 사용하여 상호작용할 때 안드로이드 프레임워크에 의해 호출됨
   - 버튼을 눌렀을 때 처리
   - 리스트 뷰에서 항목을 선택했을 때 처리
-    ![](images/ui/eventlistener.png)
+    - ![](images/ui/eventlistener.png)
 
 
 ## Event Listener Interface
