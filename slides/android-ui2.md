@@ -123,7 +123,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app
 
 ---
 - 시스템 언어 설정에 따라 문자열에 다르게 표시됨
-![](images/ui/text-attr.png) ![](images/ui/text-attr-ko.png)
+- ![](images/ui/text-attr.png) ![](images/ui/text-attr-ko.png)
 
 
 ## 스타일과 테마(Style & Theme)
@@ -436,5 +436,5 @@ binding.button은 앞의 xml에서 id를 button으로 한 버튼 위젯 객체�
 binding.editTextTextPersonName에 입력된 내용으로 binding.textView2의 text를 변경한다. 
 
 ---
-- 실행 결과
-![h:600](images/ui/demo1.png) 버튼을 누르면 → ![h:600](images/ui/demo2.png)
+- 실행 결과 
+- ![h:600](images/ui/demo1.png) 버튼을 누르면 → ![h:600](images/ui/demo2.png)
