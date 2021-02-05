@@ -316,64 +316,125 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app
 - findViewById() 의 단점은 사용할 때 마다 UI 트리에서 해당 위젯을 찾아야 함
 - viewBinding을 이용하면 찾을 필요 없이 해당 객체를 바로 접근할 수 있음
 - 컴파일시에 해당 위젯이 없으면 오류가 나기 때문에 동적 오류 방지
+- 모듈의 build.gradle 에 viewBinding 설정 추가하고 Sync 누름
+    ```groovy
+    android {
+        compileSdkVersion 30
+        buildToolsVersion "30.0.2"
+
+        ... 중간 생략 ...    
+
+    →   buildFeatures {
+    →       viewBinding true
+    →   }
+    }
+    ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/build.gradle
+
+build.gradle(Module:xx.app) 이라고 표시된 build.gradle 파일을 열어서 수정하며 된다. 프로젝트 루트의 build.gradle이 아님을 주의하자. 이 파일의 위치는 보통 모듈 app/build.gradle에 있다.
+
+build.gradle 파일을 수정하면 안드로이드 스튜디오가 자동으로 Sync 링크(버튼)을 표시하기 때문에 바로 클릭하면 된다. 만일 이 버튼을 찾을 수 없다면 메뉴에서 File > Sync Project with Gradle Files를 선택하면 된다.
+
+---
+- viewBinding 사용하기 전
+    ```kotlin
+    class MainActivity : AppCompatActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+    →       setContentView(R.layout.activity_main)
+    →       val imageView = findViewById<ImageView>(R.id.imageView)
+            imageView.scaleType = ImageView.ScaleType.CENTER
+    ```
+- viewBinding 사용
+    ```kotlin    
+    import com.example.prog_ui.databinding.ActivityMainBinding
+
+    class MainActivity : AppCompatActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+    →       val binding = ActivityMainBinding.inflate(layoutInflater)
+    →       setContentView(binding.root)
+            binding.imageView.scaleType = ImageView.ScaleType.CENTER
+    ```
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/java/com/example/prog_ui/MainActivity.kt
+
+ActivityMainBinding 클래스는 build.gradle에서 viewBinding을 true로 하면 자동으로 생성되는 클래스이다. inflate() 메소드는 해당 레이아웃에 해당하는 바인딩 객체를 리턴한다. 그리고 이 바인딩 객체에 id가 부여된 View들의 객체가 멤버로 포함되어 있다.
+
+binding.root는 레이아웃의 루트 View 로 setContentView()에 주어야 액티비티에 표시가 된다.
+
+binding.imageView는 레이아웃에 id가 imageView인 위젯을 의미하는 것이고, 여기에서는 scaleType 속성을 변경하는 예를 보여준다.
+
+참고로 Data Binding 이라고 하는 것도 있다. https://developer.android.com/topic/libraries/data-binding
 
 
 ## RadioButton
 - RadioGroup의 자식 View로 RadioButton을 사용하면 자식 RadioButton들 중 하나만 선택이 됨
     ```xml
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radioDog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"    android:layout_height="wrap_content"
             android:text="@string/dog" />
 
         <RadioButton
             android:id="@+id/radioCat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"    android:layout_height="wrap_content"
             android:text="@string/cat" />
     </RadioGroup>
     ```
 
 https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/activity_main.xml#L57-L73
 
+RadioGroup의 android:orientation 속성에 따라 가로나 세로로 라디오 버튼을 배치할 수 있다.
+
 
 ## Button
 - 버튼
     ```xml
     <Button
-        android:id="@+id/button"
+    →   android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/action" />
     ```
+    - android:id 를 지정해둬야 프로그램 코드에서 해당 객체를 가져올 수 있음
+    - @+를 붙이는 이유는 미리 정의하지 않은 상수이기 때문에 새로 생성하도록 하는 지시임
+
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/res/layout/activity_main.xml#L75-L80
+
 
 ## 버튼 클릭으로 위젯 내용 변경
 - 코드
-```kotlin
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    ```kotlin
+    class MainActivity : AppCompatActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            val binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.imageView.scaleType = ImageView.ScaleType.CENTER
-
-        binding.button.setOnClickListener {
-            // hide softkeyboard
-            (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(it.windowToken, 0)
-
-            val pet = "Dog:${binding.radioDog.isChecked}, Cat:${binding.radioCat.isChecked}"
-            binding.textView2.text = binding.editTextTextPersonName.text
-            Snackbar.make(it, pet, Snackbar.LENGTH_SHORT).show()
+            binding.button.setOnClickListener {
+                val pet = "Dog:${binding.radioDog.isChecked}, Cat:${binding.radioCat.isChecked}"
+                binding.textView2.text = binding.editTextTextPersonName.text
+                Snackbar.make(it, pet, Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
+    ```
 
-}
-```
+https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app/src/main/java/com/example/prog_ui/MainActivity.kt
+
+binding.button은 앞의 xml에서 id를 button으로 한 버튼 위젯 객체를 의미한다. 이 객체의 setOnClickListener()를 호출하여 버튼 클릭 콜백을 lambda로 등록한다.
+
+버튼 클릭이 발생하면 binding.radioDog와 binding.radioCat의 체크 상태를 문자열로 만들어 pet에 넣고 스낵바로 보여준다.
+
+binding.editTextTextPersonName에 입력된 내용으로 binding.textView2의 text를 변경한다. 
+
+---
+- 실행 결과
+![h:600](images/ui/demo1.png) 버튼을 누르면 → ![h:600](images/ui/demo2.png)
