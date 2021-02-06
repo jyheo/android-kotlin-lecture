@@ -15,7 +15,7 @@ class MyViewModel : ViewModel() {
 
     fun increaseCount() {
         count++
-        countLivedata.value = count
+        countLivedata.value = (countLivedata.value ?: 0) + 1
     }
 
     override fun onCleared() {
