@@ -5,7 +5,8 @@ OUTPUTDIR=output/
 
 FIREBASE=$(addprefix firebase-, auth database messaging storage)
 FLUTTER=flutter
-TARGETS=android-intro notification room $(FIREBASE) $(FLUTTER)
+ANDROIDBASIC=android-intro android-ui android-ui2 clayout activity-intent notification room
+TARGETS=$(ANDROIDBASIC) $(FIREBASE) $(FLUTTER)
 
 TARGETS_PDF=$(addprefix $(OUTPUTDIR), $(addsuffix .pdf, $(TARGETS)))
 TARGETS_PPTX=$(addprefix $(OUTPUTDIR), $(addsuffix .pptx, $(TARGETS)))
