@@ -120,6 +120,9 @@ tools 속성들은 실제로 레이아웃이 inflate(앱에서 xml을 읽어서 
   ```
   - ```setContentView()``` 메소드에 해당 XML을 인자로 전달
   - ```R.layout.activity_main``` 은 앞의 app/src/main/res/layout/activity_main.xml 파일을 나타내는 상수 값으로 빌드할 때 자동으로 생성됨
+- 참고: Jetpack Compose 베타 버전이 출시
+  - XML 방식이 아닌 코틀린 코드로 UI를 프로그래밍하는 방식
+  - https://developer.android.com/jetpack/compose/tutorial
 
 MainActivity의 onCreate()는 일단은 main()함수 같이 프로그램의 시작 지점이라고 생각해두자.
 
