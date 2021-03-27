@@ -101,21 +101,17 @@ backgroundImage: url('images/background.png')
   - 오른쪽 마우스 버튼 눌러서 팝업 메뉴 Chains > Create Horizontal Chain
 
 ---
-<!-- _class: double nodots -->
-- 버튼 사이의 선이 chain 모양으로 바뀌어 있고 일정한 간격으로 정렬이 됨
-- ![w:500](images/clayout/chain2.png)
-  - 버튼간의 constraint가 서로 연결되는 형태임
--
+- 
   ```xml
   <Button
-    android:id="@+id/button1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Button1"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/button2"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+      android:id="@+id/button1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Button1"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/button2"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
   <Button
       android:id="@+id/button2"
@@ -126,7 +122,7 @@ backgroundImage: url('images/background.png')
       app:layout_constraintEnd_toStartOf="@+id/button3"
       app:layout_constraintStart_toEndOf="@+id/button1"
       app:layout_constraintTop_toTopOf="parent" />
-
+      
   <Button
       android:id="@+id/button3"
       android:layout_width="wrap_content"
@@ -136,7 +132,12 @@ backgroundImage: url('images/background.png')
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/button2"
       app:layout_constraintTop_toTopOf="parent" />
+  
   ```
+- 버튼 사이의 선이 chain 모양으로 바뀌어 있고 일정한 간격으로 정렬이 됨
+- ![w:500](images/clayout/chain2.png)
+  - 버튼간의 constraint가 서로 연결되는 형태임
+<!-- _class: double nodots -->
 
 ## Chain – Mode(spread, spread_inside, packed)
 <!-- _class: double -->
