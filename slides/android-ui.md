@@ -256,7 +256,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/basic_ui/ap
 ## UI 요소 크기
 - UI 요소(레이아웃과 위젯)의 가로,세로 크기를 지정할 수 있음
 - 가로 크기: layout_width
-- 새로 크기: layout_height
+- 세로 크기: layout_height
 - 크기 값으로 사용 가능한 것은
   - match_parent: 부모 UI요소 크기와 일치시킴
   - wrap_content: UI요소 내부의 내용 크기에 맞게 크기를 조절함
