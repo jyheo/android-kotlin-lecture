@@ -124,6 +124,16 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/prog_ui/app
 ---
 - 시스템 언어 설정에 따라 문자열에 다르게 표시됨
 - ![](images/ui/text-attr.png) ![](images/ui/text-attr-ko.png)
+- 소스코드에서 문자열 리소스 사용
+    ```kotlin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        var app_name = resources.getString(R.string.app_name)
+    }
+    ```
+    - 참고: https://developer.android.com/guide/topics/resources/string-resource
 
 
 ## 스타일과 테마(Style & Theme)
