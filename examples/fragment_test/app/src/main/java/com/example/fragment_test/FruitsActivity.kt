@@ -45,7 +45,8 @@ class FruitsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fruits)
 
         viewModel.selectLiveData.observe(this) {
-            title = "Selected: $it"   // change title 
+            //title = "Selected: $it"   // change title
+            supportActionBar?.title = "Selected: $it"   // change title
         }
     }
 }
