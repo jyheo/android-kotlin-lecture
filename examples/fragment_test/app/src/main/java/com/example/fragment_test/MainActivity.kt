@@ -1,7 +1,10 @@
 package com.example.fragment_test
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.fragment_test.databinding.ActivityMainBinding
@@ -37,5 +40,18 @@ class MainActivity : AppCompatActivity() {
                 addToBackStack(null)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.viewmodel -> startActivity(Intent(this, FruitsActivity::class.java))
+            R.id.navigation -> startActivity(Intent(this, NavActivity::class.java))
+        }
+        return true
     }
 }

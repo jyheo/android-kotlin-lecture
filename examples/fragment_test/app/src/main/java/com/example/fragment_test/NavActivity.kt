@@ -3,9 +3,7 @@ package com.example.fragment_test
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.fragment_test.databinding.HomeFragmentBinding
 import com.example.fragment_test.databinding.Nav1FragmentBinding
