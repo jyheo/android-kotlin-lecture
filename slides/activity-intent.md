@@ -20,17 +20,17 @@ backgroundImage: url('images/background.png')
 - 인텐트(Intent)의 용도와 명시적/암시적 인텐트의 차이를 설명하고 사용할 수 있다.
 - 인텐트로 액티비티 간에 데이터를 주고 받도록 만들 수 있다.
 - MVVM 패턴을 이해하고 ViweModel, LiveData를 이용하여 프로그래밍할 수 있다.
+- 예제 소스 코드: https://github.com/jyheo/android-kotlin-lecture/tree/master/examples/activity_intent
 
 
 ## 액티비티(Activity)
-- **Activity** 는 일종의 **애플리케이션 구성 요소**로서, **사용자와 상호작용할 수 있는 화면** 을 제공하여 전화 걸기, 사진 찍기, 이메일 보내기 또는 지도 보기 등의 일을 할 수 있습니다. 액티비티마다 창이 하나씩 주어져 이곳에 사용자 인터페이스를 끌어올(draw) 수 있습니다. 이 창은 일반적으로 화면을 가득 채우지만, 작은 창으로 만들어 다른 창 위에 띄울 수도 있습니다.
-- 여기에서 창은 View
-- 출처: https://developer.android.com/guide/components/activities.html
-
-
-안드로이드 애플리케이션은 4가지 구성 요소들을 적절히 사용하여 만들어짐
-: 액티비티, 서비스, 브로드캐스트 리시버, 컨텐트 프로바이더
-
+- **Activity** 는 **앱 구성 요소**로서, **사용자와 상호작용할 수 있는 화면** 을 제공
+- 안드로이드 앱 구성 요소: 액티비티, 서비스, 브로드캐스트 리시버, 컨텐트 프로바이더
+- 앱의 시작은 액티비티에서 시작함
+- 앱에는 여러 액티비티를 가질 수 있음
+- 액티비티는 Activity 또는 AppCompatActivity를 상속하여 만듬
+    - AppCompatActivity는 Jetpack 라이브러리에 포함된 것으로 오래된 안드로이드 버전에서도 사용 가능
+    - AppCompatActivity 사용을 권장
 
 
 ## 액티비티(Activity) 사용
@@ -64,7 +64,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/activity_in
 참고: 안드로이드 Jetpack 라이브러리 https://developer.android.com/jetpack?hl=ko
 
 
----
+## 액티비티(Activity) 사용 - 메소드 오버라이드
 - 라이프 사이클 콜백 처리
   - onCreate, onStart, onResume, onPause, onStop, onDestroy()
 - 설정 변경(세로/가로 보기 전환 등)에 따른 콜백 처리
@@ -74,6 +74,14 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/activity_in
 
 
 ## 액티비티 라이프 사이클
+- onCreate()
+- onStart()
+- onResume()
+- 액티비티 활성황
+- onPause()
+- onStop()
+- onDestroy()
+
 ![bg right:50% 80%](https://developer.android.com/images/activity_lifecycle.png)
 
 출처: https://developer.android.com/guide/components/activities.html
@@ -90,7 +98,7 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/activity_in
   - MainActivity의 onRestart(), onStart(), onResume()
   - SecondActivity의 onStop(), onDestroy()
 
-![bg right:30% 90%](images/activityfirstsecond.png)
+![bg right:30% 90%](images/activity/activityfirstsecond.png)
 
 https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/activity_intent/app/src/main/java/com/example/activity_intent/MainActivity.kt
 
@@ -98,10 +106,12 @@ https://github.com/jyheo/android-kotlin-lecture/blob/master/examples/activity_in
 
 
 ## 인텐트
-- **Intent**는 일종의 **메시지 객체**입니다. 이것을 사용해 다른 **앱 구성 요소**로부터 작업을 요청할 수 있습니다. 인텐트가 여러 구성 요소 사이의 통신을 용이하게 하는 데에는 몇 가지 방법이 있지만, 기본적인 사용 사례는 다음과 같은 세 가지입니다.
-* 액티비티 시작하기
-* 서비스 시작하기
-* 브로드캐스트 전달하기
+- **Intent**는 일종의 **메시지 객체**
+- 다른 **앱 구성 요소**에 Intent를 보내 작업을 요청
+- 기본적인 사용 사례
+    - 액티비티 시작하기
+    - 서비스 시작하기
+    - 브로드캐스트 전달하기
 
 출처: https://developer.android.com/guide/components/intents-filters.html
 
