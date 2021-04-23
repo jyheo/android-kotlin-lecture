@@ -155,3 +155,12 @@ backgroundImage: url('images/background.png')
 - Chain으로 연결된 위젯들의 첫 위젯 Bias를 변경하면 모두 따라서 움직임
 - ![w:500](images/clayout/chain-bias.png) 
 - ![w:400](images/clayout/chain-bias-prop.png) 
+
+
+## Flow
+
+
+## Guideline 과 Barrier
+
+
+## Group 과 Layer
