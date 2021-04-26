@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"
+        android:title="@string/bookmark"
+        app:showAsAction="always"/>
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/navDrawer"
+        android:title="@string/navigation_drawer" />
+
+    <item
+        android:id="@+id/navBottom"
+        android:title="@string/bottom_navigation" />
+
+    <item android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home" />
+
+    <item android:id="@+id/page1Fragment"
+        android:icon="@drawable/ic_baseline_inbox_24"
+        android:title="@string/page1" />
+
+    <item android:id="@+id/page2Fragment"
+        android:icon="@drawable/ic_baseline_send_24"
+        android:title="@string/page2" />
+
+    <item android:id="@+id/page3Fragment"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:title="@string/page3" />
+</menu>
