@@ -40,27 +40,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_favorite -> {
+        when (item.itemId) {
+            R.id.action_favorite ->
                 OkCancelDialogFragment().show(supportFragmentManager, "OkCancelDialog")
                 //findNavController(R.id.fragment).navigate(R.id.action_homeFragment_to_okCancelDialogFragment)
-                true
-            }
-            R.id.action_settings -> {
+            R.id.action_settings ->
                 MyBottomSheetDialog().show(supportFragmentManager, "MyBottomSheetDialog")
-                true
-            }
-            R.id.navDrawer -> {
+            R.id.navDrawer ->
                 startActivity(Intent(this, MainActivityDrawer::class.java))
-                true
-            }
-            R.id.navBottom -> {
+            R.id.navBottom ->
                 startActivity(Intent(this, MainActivityBottomNav::class.java))
-                true
-            }
             R.id.homeFragment, R.id.page1Fragment, R.id.page2Fragment, R.id.page3Fragment ->
                 item.onNavDestinationSelected(findNavController(R.id.fragment))
-            else -> super.onOptionsItemSelected(item)
+            else -> return super.onOptionsItemSelected(item)
         }
+        return true
     }
 }
