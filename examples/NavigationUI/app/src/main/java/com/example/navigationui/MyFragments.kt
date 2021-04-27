@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.navigationui.databinding.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val myViewModel: MyViewModel by activityViewModels()
@@ -21,6 +24,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         myViewModel.nameLiveData.observe(viewLifecycleOwner) {
             binding.textViewName.text = it
         }
+        // popup menu
+        binding.textViewPopup.setOnClickListener {
+            showPopup(it)
+        }
+    }
+
+    private fun showPopup(v: View) {
+        PopupMenu(requireContext(), v).apply {
+            inflate(R.menu.nav_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.homeFragment -> {
+                        Snackbar.make(v, "HomeFragment", Snackbar.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }.show()
     }
 }
 
