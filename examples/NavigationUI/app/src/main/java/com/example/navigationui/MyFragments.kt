@@ -108,10 +108,7 @@ class MyBottomSheetDialog : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        isCancelable = false
-        return MyBottomDialogBinding.inflate(inflater, container, false).root
-    }
+    ) = MyBottomDialogBinding.inflate(inflater, container, false).root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = MyBottomDialogBinding.bind(view)

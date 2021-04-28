@@ -7,15 +7,14 @@
         android:title="@string/bookmark"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/action_datepicker"
-        android:icon="@drawable/ic_baseline_date_range_24"
-        android:title="@string/date_picker"
-        app:showAsAction="ifRoom"/>
-
-    <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/settings"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_datepicker"
+        android:icon="@drawable/ic_baseline_date_range_24"
+        android:title="@string/date_picker"
         app:showAsAction="ifRoom"/>
 
     <item
