@@ -1,10 +1,12 @@
 package com.example.navigationui
 
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
@@ -80,11 +82,22 @@ class Page3Fragment : Fragment(R.layout.fragment_page3) {
 class OkCancelDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         isCancelable = false
-        return AlertDialog.Builder(requireActivity()).apply {
+        return AlertDialog.Builder(requireContext()).apply {
             setMessage("OK-CANCEL Dialog")
             setPositiveButton("OK") { dialog, id -> println("OK")}
             setNegativeButton("CANCEL") { dialog, id -> println("CANCEL")}
         }.create()
+    }
+}
+
+class DatePickerFragment : DialogFragment(),  DatePickerDialog.OnDateSetListener {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return DatePickerDialog(requireContext(), this,
+                2021, 4, 28) // Jan: 0, Feb:1, Mar:2, Apr: 3 ...
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        println("$year, $month, $dayOfMonth")
     }
 }
 

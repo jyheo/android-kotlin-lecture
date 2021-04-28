@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
             R.id.action_favorite ->
                 OkCancelDialogFragment().show(supportFragmentManager, "OkCancelDialog")
                 //findNavController(R.id.fragment).navigate(R.id.action_homeFragment_to_okCancelDialogFragment)
+            R.id.action_datepicker ->
+                DatePickerFragment().show(supportFragmentManager, "DatePickerDialog")
             R.id.action_settings ->
                 MyBottomSheetDialog().show(supportFragmentManager, "MyBottomSheetDialog")
             R.id.navDrawer ->

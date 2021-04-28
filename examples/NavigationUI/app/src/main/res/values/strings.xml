@@ -9,4 +9,5 @@
     <string name="navigation_drawer">Navigation Drawer</string>
     <string name="bottom_navigation">Bottom Navigation</string>
     <string name="activity_with_toolbar">Activity with Toolbar</string>
+    <string name="date_picker">Date Picker</string>
 </resources>
