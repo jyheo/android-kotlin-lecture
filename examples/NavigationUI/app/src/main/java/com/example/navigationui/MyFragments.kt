@@ -12,6 +12,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.navigationui.databinding.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
@@ -53,6 +54,9 @@ class Page1Fragment : Fragment(R.layout.fragment_page1) {
         val binding = FragmentPage1Binding.bind(view)
         myViewModel.nameLiveData.observe(viewLifecycleOwner) {
             binding.textViewName.text = it
+        }
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_page1Fragment_to_page2Fragment)
         }
     }
 }
