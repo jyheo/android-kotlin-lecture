@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
@@ -82,12 +80,11 @@ class Page3Fragment : Fragment(R.layout.fragment_page3) {
 class OkCancelDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         isCancelable = false
-        return with (AlertDialog.Builder(requireActivity())) {
+        return AlertDialog.Builder(requireActivity()).apply {
             setMessage("OK-CANCEL Dialog")
             setPositiveButton("OK") { dialog, id -> println("OK")}
             setNegativeButton("CANCEL") { dialog, id -> println("CANCEL")}
-            create()
-        }
+        }.create()
     }
 }
 
