@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeFragment"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.navigationui.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_okCancelDialogFragment"
             app:destination="@id/okCancelDialogFragment" />
@@ -14,7 +16,8 @@
     <fragment
         android:id="@+id/page1Fragment"
         android:name="com.example.navigationui.Page1Fragment"
-        android:label="Page1Fragment" >
+        android:label="Page1Fragment"
+        tools:layout="@layout/fragment_page1">
         <action
             android:id="@+id/action_page1Fragment_to_page2Fragment"
             app:destination="@id/page2Fragment" />
@@ -22,11 +25,13 @@
     <fragment
         android:id="@+id/page2Fragment"
         android:name="com.example.navigationui.Page2Fragment"
-        android:label="Page2Fragment" />
+        android:label="Page2Fragment"
+        tools:layout="@layout/fragment_page2"/>
     <fragment
         android:id="@+id/page3Fragment"
         android:name="com.example.navigationui.Page3Fragment"
-        android:label="Page3Fragment" />
+        android:label="Page3Fragment"
+        tools:layout="@layout/fragment_page3"/>
     <dialog
         android:id="@+id/okCancelDialogFragment"
         android:name="com.example.navigationui.OkCancelDialogFragment"
