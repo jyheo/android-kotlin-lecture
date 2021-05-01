@@ -17,14 +17,6 @@
         android:title="@string/date_picker"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/navDrawer"
-        android:title="@string/navigation_drawer" />
-
-    <item
-        android:id="@+id/navBottom"
-        android:title="@string/bottom_navigation" />
-
     <item android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/home" />
@@ -40,4 +32,12 @@
     <item android:id="@+id/page3Fragment"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="@string/page3" />
+
+    <item
+        android:id="@+id/navDrawer"
+        android:title="@string/navigation_drawer" />
+
+    <item
+        android:id="@+id/navBottom"
+        android:title="@string/bottom_navigation" />
 </menu>
