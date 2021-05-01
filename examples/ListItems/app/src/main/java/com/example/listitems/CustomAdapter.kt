@@ -1,13 +1,9 @@
 package com.example.listitems
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listitems.databinding.ItemLayoutBinding
-
-data class Item(val image: Int, val firstName: String, val lastName: String)
 
 class CustomAdapter(private val viewModel: MyViewModel) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
@@ -15,7 +11,7 @@ class CustomAdapter(private val viewModel: MyViewModel) :
     inner class ViewHolder(private val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setContents(pos: Int) {
             with (viewModel.items[pos]) {
-                binding.imageView.setImageResource(image)
+                binding.imageView.setImageResource(MyViewModel.icons[icon] ?: R.drawable.ic_baseline_person_24)
                 binding.textView.text = firstName
                 binding.textView2.text = lastName
             }

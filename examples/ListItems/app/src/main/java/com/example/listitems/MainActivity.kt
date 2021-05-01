@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.delete -> println("delete ${viewModel.itemLongClick}")
+            R.id.delete -> viewModel.deleteItem(viewModel.itemLongClick)
             R.id.edit -> viewModel.itemClickEvent.value = viewModel.itemLongClick
             else -> return false
         }

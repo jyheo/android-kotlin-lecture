@@ -9,7 +9,8 @@ import androidx.fragment.app.activityViewModels
 import com.example.listitems.databinding.ItemDialogLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ItemDialog(val itemPos: Int = -1): BottomSheetDialogFragment() {
+class ItemDialog(private val itemPos: Int = -1): BottomSheetDialogFragment() {
+    private val viewModel by activityViewModels<MyViewModel>()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -20,38 +21,30 @@ class ItemDialog(val itemPos: Int = -1): BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = ItemDialogLayoutBinding.bind(view)
 
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            listOf("person", "person outline", "person pin")
-        )
+        val adapter = ArrayAdapter(requireContext(),
+            android.R.layout.simple_spinner_item, MyViewModel.icons.keys.toList())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
 
         if (itemPos >= 0) {
-            val viewModel by activityViewModels<MyViewModel>()
             with (viewModel.items[itemPos]) {
+                val i = MyViewModel.icons.keys.toList().indexOf(icon)
+                binding.spinner.setSelection(i)
                 binding.editTextFirstName.setText(firstName)
                 binding.editTextLastName.setText(lastName)
             }
         }
 
         binding.buttonOk.setOnClickListener {
-            val viewModel by activityViewModels<MyViewModel>()
-            val icon: Int = when (binding.spinner.selectedItem as String) {
-                "person outline" -> R.drawable.ic_baseline_person_outline_24
-                "person pin" -> R.drawable.ic_baseline_person_pin_24
-                else -> R.drawable.ic_baseline_person_24
-            }
-            if (itemPos < 0) {
-                viewModel.addItem(
-                    Item(
-                        icon,
-                        binding.editTextFirstName.text.toString(),
-                        binding.editTextLastName.text.toString()
-                    )
-                )
-            }
+            val item = Item(
+                    binding.spinner.selectedItem as String,
+                    binding.editTextFirstName.text.toString(),
+                    binding.editTextLastName.text.toString()
+            )
+            if (itemPos < 0)
+                viewModel.addItem(item)
+            else
+                viewModel.updateItem(itemPos, item)
             dismiss()
         }
 
