@@ -116,6 +116,9 @@ class MyBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = MyBottomDialogBinding.bind(view)
+
+        binding.editTextName.setText(myViewModel.nameLiveData.value)
+
         binding.buttonOk.setOnClickListener {
             myViewModel.nameLiveData.value = binding.editTextName.text.toString()
             dismiss()
