@@ -38,7 +38,7 @@ class MyViewModel : ViewModel() {
     }
 
     companion object {
-        val icons = mapOf(
+        val icons = sortedMapOf(
             "person" to R.drawable.ic_baseline_person_24,
             "person outline" to R.drawable.ic_baseline_person_outline_24,
             "person pin" to R.drawable.ic_baseline_person_pin_24
