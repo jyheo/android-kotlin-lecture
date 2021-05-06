@@ -25,13 +25,14 @@ class CustomAdapter(private val viewModel: MyViewModel) :
         }
     }
 
-    // ViewHolder 생성, ViewHolder는 View를 담는 상자
+    // ViewHolder 생성, ViewHolder 는 View 를 담는 상자
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(viewGroup.context),
-            viewGroup, false))
+        val layoutInflater = LayoutInflater.from(viewGroup.context)
+        val binding = ItemLayoutBinding.inflate(layoutInflater, viewGroup, false)
+        return ViewHolder(binding)
     }
 
-    // ViewHolder에 데이터 쓰기
+    // ViewHolder 에 데이터 쓰기
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.setContents(position)
     }
