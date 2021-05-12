@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Read Internal"
+        android:text="@string/read_internal"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonWriteIn"
         app:layout_constraintStart_toEndOf="@+id/buttonWriteIn" />
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Write Internal"
+        android:text="@string/write_internal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
@@ -43,19 +43,46 @@
         android:id="@+id/buttonWriteExt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Write External"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/write_external"
+        app:layout_constraintStart_toStartOf="@+id/buttonWriteIn"
         app:layout_constraintTop_toBottomOf="@+id/buttonWriteIn" />
 
     <Button
         android:id="@+id/buttonReadExt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Read External"
+        android:text="@string/read_external"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonWriteExt"
-        app:layout_constraintStart_toEndOf="@+id/buttonWriteExt" />
+        app:layout_constraintStart_toStartOf="@+id/buttonReadIn" />
+
+    <Button
+        android:id="@+id/buttonWritePref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/write_pref"
+        app:layout_constraintStart_toStartOf="@+id/buttonWriteExt"
+        app:layout_constraintTop_toBottomOf="@+id/buttonWriteExt" />
+
+    <Button
+        android:id="@+id/buttonReadPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/read_preference"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonWritePref"
+        app:layout_constraintStart_toStartOf="@+id/buttonReadExt" />
+
+    <TextView
+        android:id="@+id/textViewSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonWritePref" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
