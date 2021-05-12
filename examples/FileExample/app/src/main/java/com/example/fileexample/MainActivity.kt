@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<MyViewModel> { MyViewModelFactory(this) }
     private val pref by lazy { getSharedPreferences("MY-SETTINGS", 0) }
+    private lateinit var activityForResult: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +65,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         displaySettings()
+
+        // startActivityForResult was deprecated!
+        activityForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                displaySettings()
+            }
+        }
     }
 
     private fun displaySettings() {
@@ -85,15 +95,12 @@ attachment: $attachment
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.settings -> startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
+            R.id.settings -> {
+                // startActivityForResult was deprecated!
+                activityForResult.launch(Intent(this, SettingsActivity::class.java))
+            }
             else -> return super.onOptionsItemSelected(item)
         }
         return true
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0)
-            displaySettings()
     }
 }
