@@ -1,13 +1,12 @@
 package com.example.backgroundtask
 
-import android.app.Dialog
+import android.Manifest
 import android.content.*
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import com.example.backgroundtask.databinding.ActivityBroadcastBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -20,27 +19,22 @@ class BroadcastActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        requestSinglePermission(Manifest.permission.RECEIVE_SMS)
+
         binding.buttonSendMyBroad.setOnClickListener {
             sendBroadcast(Intent(ACTION_MY_BROADCAST))
         }
-
-        checkPermission("RECEIVE_SMS", true)
     }
 
-    private fun checkPermission(perm: String, requestPerm: Boolean = false): Boolean {
-        val permission = "android.permission.${perm}"
-
+    private fun requestSinglePermission(permission: String) {
         if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
-            return true
-
-        if (!requestPerm)
-            return false
+            return
 
         val requestPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it == false) { // permission is not granted!
                 AlertDialog.Builder(this).apply {
                     setTitle("Warning")
-                    setMessage(getString(R.string.no_permission, perm))
+                    setMessage(getString(R.string.no_permission, permission))
                 }.show()
             }
         }
@@ -49,7 +43,7 @@ class BroadcastActivity : AppCompatActivity() {
             // you should explain the reason why this app needs the permission.
             AlertDialog.Builder(this).apply {
                 setTitle("Reason")
-                setMessage(getString(R.string.req_permission_reason, perm))
+                setMessage(getString(R.string.req_permission_reason, permission))
                 setPositiveButton("Allow") { _, _ -> requestPermLauncher.launch(permission) }
                 setNegativeButton("Deny") { _, _ -> }
             }.show()
@@ -57,8 +51,6 @@ class BroadcastActivity : AppCompatActivity() {
             // should be called in onCreate()
             requestPermLauncher.launch(permission)
         }
-
-        return false
     }
 
     private fun startBroadcastReceiver() {
