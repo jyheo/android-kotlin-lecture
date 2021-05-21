@@ -7,6 +7,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.view.Menu
+import android.view.MenuItem
 import com.example.backgroundtask.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
@@ -87,5 +89,19 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         unbindService(serviceConnection)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.broadcastTest) {
+            startActivity(Intent(this, BroadcastActivity::class.java))
+            return true
+        } else {
+            return super.onOptionsItemSelected(item)
+        }
     }
 }
