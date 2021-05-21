@@ -11,26 +11,10 @@ import androidx.fragment.app.DialogFragment
 import com.example.backgroundtask.databinding.ActivityBroadcastBinding
 import com.google.android.material.snackbar.Snackbar
 
-
-class MyDialogFragment(val msg: String, val showButton: Boolean = false,
-                       val listener: DialogInterface.OnClickListener? = null) : DialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return (AlertDialog.Builder(requireContext())).apply {
-            setTitle("Alert")
-            setMessage(msg)
-            if (showButton) {
-                setPositiveButton("Yes", listener)
-                setNegativeButton("No") { _, _ -> }
-            }
-        }.create()
-    }
-}
-
 class BroadcastActivity : AppCompatActivity() {
     val binding by lazy { ActivityBroadcastBinding.inflate(layoutInflater) }
 
     private val broadcastReceiver = MyBroadcastReceiver()
-    private var permissionReadSMS = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,36 +24,41 @@ class BroadcastActivity : AppCompatActivity() {
             sendBroadcast(Intent(ACTION_MY_BROADCAST))
         }
 
-        checkPermission()
+        checkPermission("RECEIVE_SMS", true)
     }
 
-    fun MyDialogFragment.show() {
-        show(supportFragmentManager, "")
-    }
+    private fun checkPermission(perm: String, requestPerm: Boolean = false): Boolean {
+        val permission = "android.permission.${perm}"
 
-    private fun checkPermission() {
-        val permission = "android.permission.RECEIVE_SMS"
+        if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+            return true
+
+        if (!requestPerm)
+            return false
 
         val requestPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it)  // it : isGranted
-                permissionReadSMS = true
-            else
-                MyDialogFragment(getString(R.string.no_perm_read_sms)).show() // supportFragmentManager, "")
+            if (it == false) { // permission is not granted!
+                AlertDialog.Builder(this).apply {
+                    setTitle("Warning")
+                    setMessage(getString(R.string.no_permission, perm))
+                }.show()
+            }
         }
 
-        when {
-            checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED -> {
-                permissionReadSMS = true
-            }
-            shouldShowRequestPermissionRationale(permission) -> {
-                MyDialogFragment(getString(R.string.req_perm_read_sms_reason), true) {
-                        _, _ -> requestPermLauncher.launch(permission)
-                }.show(supportFragmentManager, "")
-            }
-            else -> {
-                requestPermLauncher.launch(permission)
-            }
+        if (shouldShowRequestPermissionRationale(permission)) {
+            // you should explain the reason why this app needs the permission.
+            AlertDialog.Builder(this).apply {
+                setTitle("Reason")
+                setMessage(getString(R.string.req_permission_reason, perm))
+                setPositiveButton("Allow") { _, _ -> requestPermLauncher.launch(permission) }
+                setNegativeButton("Deny") { _, _ -> }
+            }.show()
+        } else {
+            // should be called in onCreate()
+            requestPermLauncher.launch(permission)
         }
+
+        return false
     }
 
     private fun startBroadcastReceiver() {

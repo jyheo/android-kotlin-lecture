@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Background Task</string>
-    <string name="no_perm_read_sms">App cannot read SMS because You didn\'t grant the Read SMS permission.</string>
-    <string name="req_perm_read_sms_reason">App requires Read SMS permission to read a SMS :-) May I show the permission dialog?</string>
+    <string name="no_permission">App has no permission %1$s. Some features would not work correctly.</string>
+    <string name="req_permission_reason">App requires %1$s permission. Could you allow the permission?</string>
 </resources>
