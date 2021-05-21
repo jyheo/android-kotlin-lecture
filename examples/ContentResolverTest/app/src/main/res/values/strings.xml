@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ContentResolverTest</string>
+    <string name="no_permission">App has no permission %1$s. Some features would not work correctly.</string>
+    <string name="req_permission_reason">App requires %1$s permission. Could you allow the permission?</string>
+</resources>
