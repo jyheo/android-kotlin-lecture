@@ -1,11 +1,7 @@
 package com.example.contentresolvertest
 
 import android.Manifest
-import android.app.Dialog
 import android.content.ContentUris
-import android.content.ContentValues
-import android.content.DialogInterface
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -13,11 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.CallLog
 import android.provider.MediaStore
-import android.telecom.Call
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import com.example.contentresolvertest.databinding.ActivityMainBinding
 
 //https://developer.android.com/guide/topics/providers/content-provider-basics
@@ -31,8 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         Manifest.permission.READ_CALL_LOG
 
-        requestMultiplePermission(arrayOf(Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.ACCESS_COARSE_LOCATION))
+        requestMultiplePermission(arrayOf(Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_EXTERNAL_STORAGE))
 
         binding.buttonCallLog.setOnClickListener {
             readCallLog()
