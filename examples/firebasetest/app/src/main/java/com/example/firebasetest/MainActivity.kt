@@ -17,24 +17,21 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
-    lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
-        if (auth.currentUser == null) {
+        if (Firebase.auth.currentUser == null) {
             startActivity(
                 Intent(this, LoginActivity::class.java))
             finish()
         }
 
-        binding.textUID.text = auth.currentUser?.uid ?: "No User"
+        binding.textUID.text = Firebase.auth.currentUser?.uid ?: "No User"
 
         binding.buttonSignout.setOnClickListener {
-            auth.signOut()
+            Firebase.auth.signOut()
             finish()
         }
 
